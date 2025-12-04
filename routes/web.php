@@ -3,10 +3,10 @@
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\GameController;
 use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\LibraryController; 
+use App\Http\Controllers\LibraryController; // Pastikan ini di-import
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\RefundController;
-use App\Http\Controllers\CartController; // Import Controller Baru
+use App\Http\Controllers\CartController;
 use Illuminate\Support\Facades\Route;
 
 // --- EXISTING ROUTES ---
@@ -14,15 +14,15 @@ Route::get('/', [GameController::class, 'index'])->name('store.index');
 Route::get('/game/{id}', [GameController::class, 'show'])->name('game.show');
 Route::get('/search', [GameController::class, 'search'])->name('games.search');
 
-// --- NEW STATIC PAGE ROUTES (FOOTER) ---
+// --- STATIC PAGE ROUTES ---
 Route::get('/about', [PageController::class, 'about'])->name('pages.about');
 Route::get('/privacy', [PageController::class, 'privacy'])->name('pages.privacy');
 Route::get('/terms', [PageController::class, 'terms'])->name('pages.terms');
 Route::get('/stats', [PageController::class, 'stats'])->name('pages.stats');
 
-// --- CART ROUTES (SISTEM KERANJANG) ---
+// --- CART ROUTES ---
 Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
-Route::post('/cart/add/{id}', [CartController::class, 'addToCart'])->name('cart.add'); // Ubah method jadi addToCart biar spesifik
+Route::post('/cart/add/{id}', [CartController::class, 'addToCart'])->name('cart.add');
 Route::delete('/cart/remove/{id}', [CartController::class, 'remove'])->name('cart.remove');
 Route::get('/checkout', [CartController::class, 'checkout'])->name('cart.checkout');
 Route::post('/checkout/process', [CartController::class, 'processPayment'])->name('cart.process');
@@ -34,7 +34,10 @@ Route::middleware(['auth', 'verified'])->group(function () {
         return view('dashboard');
     })->name('dashboard');
 
+    // --- LIBRARY & SHELF ROUTES (DIPERBAIKI) ---
+    // Menggunakan LibraryController yang baru dibuat
     Route::get('/library', [LibraryController::class, 'index'])->name('library.index');
+    Route::post('/shelf', [LibraryController::class, 'storeShelf'])->name('shelf.store');
 
     // Profile Routes
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -62,7 +65,7 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::post('/admin/approve/{user}', [AdminController::class, 'approvePublisher'])->name('admin.approvePublisher');
     Route::post('/admin/reject/{user}', [AdminController::class, 'rejectPublisher'])->name('admin.rejectPublisher');
     
-    // --- REFUND ACTIONS ---
+    // Refund Actions
     Route::post('/admin/refund/{id}/approve', [AdminController::class, 'approveRefund'])->name('admin.refund.approve');
     Route::post('/admin/refund/{id}/reject', [AdminController::class, 'rejectRefund'])->name('admin.refund.reject');
     

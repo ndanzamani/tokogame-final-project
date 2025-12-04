@@ -27,6 +27,7 @@ Route::delete('/cart/remove/{id}', [CartController::class, 'remove'])->name('car
 Route::get('/checkout', [CartController::class, 'checkout'])->name('cart.checkout');
 Route::post('/checkout/process', [CartController::class, 'processPayment'])->name('cart.process');
 Route::get('/checkout/success', [CartController::class, 'success'])->name('cart.success');
+Route::get('/checkout/receipt', [CartController::class, 'downloadReceipt'])->name('cart.receipt');
 
 // --- AUTH ROUTES ---
 Route::middleware(['auth', 'verified'])->group(function () {

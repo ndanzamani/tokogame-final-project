@@ -18,4 +18,11 @@ class Game extends Model
         'is_featured' => 'boolean',
         'release_date' => 'date',
     ];
+
+    // --- RELASI BARU: Permintaan Refund ---
+    public function refundRequests()
+    {
+        return $this->hasMany(RefundRequest::class);
+    }
+    // --- END RELASI BARU ---
 }

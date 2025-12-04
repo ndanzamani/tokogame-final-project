@@ -50,6 +50,15 @@ class User extends Authenticatable
         ];
     }
 
+    // --- RELASI BARU: Games yang dimiliki (Library) ---
+    public function games()
+    {
+        // Menggunakan withPivot untuk mengakses data tambahan dari tabel pivot (game_user)
+        return $this->belongsToMany(Game::class, 'game_user')
+                    ->withPivot('purchase_price', 'transaction_id', 'created_at');
+    }
+    // --- END RELASI BARU ---
+
     // --- ACCESSOR: Untuk mempermudah pemanggilan gambar ---
     // Cara pakai di blade: {{ Auth::user()->profile_photo_url }}
     public function getProfilePhotoUrlAttribute()

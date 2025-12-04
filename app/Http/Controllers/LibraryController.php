@@ -14,8 +14,10 @@ class LibraryController extends Controller
      */
     public function index()
     {
-        // Ambil semua game yang approved (Simulasi: user memiliki semua game ini)
-        $ownedGames = Game::where('is_approved', true)->get();
+        // PERBAIKAN: Ambil game HANYA yang dimiliki user melalui relasi games()
+        // Ini memastikan game yang belum dibeli (hanya di Store) tidak muncul.
+        $user = Auth::user();
+        $ownedGames = $user->games()->get();
         
         // Ambil Rak/Collection milik user yang sedang login
         $userShelves = Shelf::where('user_id', Auth::id())->with('games')->get();
@@ -42,14 +44,15 @@ class LibraryController extends Controller
     
         if ($request->mode === 'manual') {
             if ($request->has('selected_games')) {
-                // Attach game yang dipilih ke shelf
-                $shelf->games()->attach($request->selected_games);
+                // Attach game yang dipilih ke shelf (pastikan game ini milik user)
+                $ownedGameIds = Auth::user()->games()->whereIn('game_id', $request->selected_games)->pluck('game_id');
+                $shelf->games()->syncWithoutDetaching($ownedGameIds);
             }
         } 
         elseif ($request->mode === 'dynamic') {
-            // Cari game berdasarkan genre dan attach
-            $gameIds = Game::where('genre', $request->genre)->pluck('id');
-            $shelf->games()->attach($gameIds);
+            // Cari game yang dimiliki user yang sesuai dengan genre dan attach
+            $ownedGameIds = Auth::user()->games()->where('genre', $request->genre)->pluck('game_id');
+            $shelf->games()->syncWithoutDetaching($ownedGameIds);
         }
     
         return redirect()->back()->with('success', 'Shelf berhasil dibuat!');

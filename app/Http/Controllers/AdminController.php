@@ -44,10 +44,8 @@ class AdminController extends Controller
     // --- HALAMAN HISTORY BARU ---
     public function history()
     {
-        // 1. Game yang Ditolak
-        // Kita asumsikan game yang ditolak itu is_approved = false TAPI sudah dicek admin.
-        // Untuk sederhana, kita bisa tambah status kolom 'status' di game, tapi karena struktur DB sudah fix,
-        // kita anggap game yg tidak diapprove dan sudah lama / atau dihapus masuk sini.
+        // 1. Game yang Ditolak (Soft Deleted)
+        $rejectedGames = Game::onlyTrashed()->orderBy('deleted_at', 'desc')->get();
         
         $rejectedPublishers = User::where('publisher_request_status', 'rejected')->get();
         
@@ -60,7 +58,7 @@ class AdminController extends Controller
         // Kita tampilkan game yang sudah Approved sebagai "Published History".
         $publishedGames = Game::where('is_approved', true)->orderBy('created_at', 'desc')->get();
 
-        return view('admin.history', compact('rejectedPublishers', 'processedRefunds', 'publishedGames'));
+        return view('admin.history', compact('rejectedGames', 'rejectedPublishers', 'processedRefunds', 'publishedGames'));
     }
 
     // --- GAME ACTIONS ---

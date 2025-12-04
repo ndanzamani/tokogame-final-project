@@ -34,7 +34,7 @@
 
                     {{-- KIRI: Gambar Besar --}}
                     <div class="w-full md:w-2/3 relative group border-r-4 border-black bg-black">
-                        <img src="{{ $feat->cover_image }}"
+                        <img src="{{ $feat->cover_image }}" fetchpriority="high"
                             class="w-full h-full object-cover opacity-90 group-hover:opacity-100 transition duration-500">
 
                         {{-- Badge Live Now --}}
@@ -123,7 +123,7 @@
 
                                 {{-- Gambar --}}
                                 <div class="h-48 overflow-hidden border-b-4 border-black bg-gray-100">
-                                    <img src="{{ $game->cover_image }}" alt="{{ $game->title }}"
+                                    <img src="{{ $game->cover_image }}" alt="{{ $game->title }}" loading="lazy"
                                         class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
                                 </div>
 
@@ -175,7 +175,7 @@
 
                             <a href="{{ route('game.show', $game) }}" class="flex w-full items-center">
                                 {{-- Gambar Kecil --}}
-                                <img src="{{ $game->cover_image }}" class="h-24 w-48 object-cover border-r-4 border-black" alt="">
+                                <img src="{{ $game->cover_image }}" loading="lazy" class="h-24 w-48 object-cover border-r-4 border-black" alt="">
 
                                 {{-- Info --}}
                                 <div class="flex-grow px-6">

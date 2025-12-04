@@ -33,6 +33,41 @@
                 </ul>
             </div>
 
+            {{-- 1.5. REJECTED GAMES (BARU) --}}
+            <div class="bg-[#16202d] overflow-hidden shadow-xl sm:rounded-lg p-6 border-t-4 border-red-700">
+                <h3 class="text-xl font-black text-white mb-4 uppercase tracking-widest text-red-600">
+                    🚫 Rejected Games History
+                </h3>
+                <div class="overflow-x-auto">
+                    <table class="min-w-full divide-y divide-gray-700">
+                        <thead class="bg-black/20">
+                            <tr>
+                                <th class="px-4 py-2 text-left text-xs font-bold text-gray-500 uppercase">Deleted At</th>
+                                <th class="px-4 py-2 text-left text-xs font-bold text-gray-500 uppercase">Title</th>
+                                <th class="px-4 py-2 text-left text-xs font-bold text-gray-500 uppercase">Publisher</th>
+                                <th class="px-4 py-2 text-left text-xs font-bold text-gray-500 uppercase">Status</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-gray-700 text-sm text-gray-300">
+                            @forelse($rejectedGames as $game)
+                                <tr class="hover:bg-white/5">
+                                    <td class="px-4 py-2">{{ $game->deleted_at->format('d M Y H:i') }}</td>
+                                    <td class="px-4 py-2 font-bold">{{ $game->title }}</td>
+                                    <td class="px-4 py-2">{{ $game->publisher }}</td>
+                                    <td class="px-4 py-2">
+                                        <span class="text-red-500 font-bold bg-red-900/20 px-2 py-1 rounded text-xs">REJECTED & DELETED</span>
+                                    </td>
+                                </tr>
+                            @empty
+                                <tr>
+                                    <td colspan="4" class="px-4 py-4 text-center text-gray-500 italic">No rejected games history.</td>
+                                </tr>
+                            @endforelse
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
             {{-- 2. REFUND HISTORY --}}
             <div class="bg-[#16202d] overflow-hidden shadow-xl sm:rounded-lg p-6 border-t-4 border-gray-500">
                 <h3 class="text-xl font-black text-white mb-4 uppercase tracking-widest text-gray-400">

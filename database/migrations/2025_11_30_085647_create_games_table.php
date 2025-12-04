@@ -16,11 +16,19 @@ return new class extends Migration {
             $table->string('publisher');
             $table->date('release_date');
             $table->string('cover_image');
+            
+            // --- KOLOM YANG HILANG/ERROR DITAMBAHKAN DI SINI ---
+            // Menggunakan tipe JSON untuk menyimpan array path screenshots
+            $table->json('screenshots')->nullable(); 
+            $table->string('trailer_url')->nullable();
+            // --- END KOLOM HILANG ---
+            
             $table->boolean('is_featured')->default(false);
+            
+            // Kolom is_approved, role, dkk akan ditambahkan di migration 2025_12_04_005000
+            // Jadi kita tidak perlu khawatir soal itu di sini.
 
-            // KOLOM INI YANG SEBELUMNYA HILANG/ERROR
             $table->integer('discount_percent')->default(0);
-
             $table->timestamps();
         });
     }

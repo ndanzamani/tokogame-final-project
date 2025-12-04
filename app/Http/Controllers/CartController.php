@@ -7,7 +7,7 @@ use App\Models\Game;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Auth; // Import Auth
 use Illuminate\Support\Str; // Import Str untuk transaction ID
-use Barryvdh\DomPDF\Facade\Pdf; // Asumsi menggunakan library DomPDF (jika ada) - kalau tidak, gunakan simulasi download
+// use Barryvdh\DomPDF\Facade\Pdf; // Tidak digunakan, tetap simulasi
 
 class CartController extends Controller
 {
@@ -97,7 +97,7 @@ class CartController extends Controller
         return view('cart.checkout', compact('cart', 'total'));
     }
 
-    // Process Pembayaran (PERBAIKAN LOGIKA)
+    // Process Pembayaran (UPDATE LOGIKA KUKUS MONEY)
     public function processPayment(Request $request)
     {
         $request->validate([
@@ -110,42 +110,61 @@ class CartController extends Controller
         }
 
         $user = Auth::user();
-        $transactionId = 'TXN-' . strtoupper(Str::random(10));
+        $paymentMethod = $request->payment_method;
         $totalTransaction = 0;
         $purchasedGames = [];
-        
-        // 1. Simpan Transaksi & Tambahkan ke Library
+        $transactionId = 'TXN-' . strtoupper(Str::random(10));
+
+        // 1. Hitung Total dan Lakukan Cek Saldo jika menggunakan Kukus Money
         foreach ($cart as $item) {
             $price = $item['price'];
             if(isset($item['discount_percent']) && $item['discount_percent'] > 0) {
                 $price = $price * (1 - $item['discount_percent'] / 100);
             }
-            
-            // Tambahkan game ke library user (tabel pivot game_user)
-            try {
-                $user->games()->attach($item['id'], [
-                    'purchase_price' => $price,
-                    'transaction_id' => $transactionId, // Gunakan ID transaksi yang sama untuk semua item
-                    'created_at' => now(),
-                    'updated_at' => now(),
-                ]);
-            } catch (\Exception $e) {
-                // Abaikan jika game sudah dimiliki (unique constraint violation)
-                // Seharusnya sudah dicek di addToCart, tapi ini sebagai fallback.
-                continue; 
-            }
-            
             $totalTransaction += $price;
             $purchasedGames[] = array_merge($item, ['final_price' => $price]);
         }
 
-        // 2. Siapkan data transaksi untuk halaman sukses
+        // Logika Saldo Kukus Money
+        if ($paymentMethod === 'kukus_money') {
+            if ($user->kukus_money_balance < $totalTransaction) {
+                // Gagal: Saldo tidak cukup
+                return redirect()->route('cart.checkout')
+                                 ->with('error', 'Saldo Kukus Money Anda (Rp' . number_format($user->kukus_money_balance, 0, ',', '.') . 
+                                 ') tidak cukup untuk total pembelian Rp' . number_format($totalTransaction, 0, ',', '.') . '.');
+            }
+            
+            // Berhasil: Kurangi saldo Kukus Money
+            $user->kukus_money_balance -= $totalTransaction;
+            $user->save();
+        } 
+        // Logika untuk metode pembayaran pihak ketiga (dana, qris, bca, visa)
+        // Menurut permintaan, pembayaran pihak ketiga selalu berhasil (simulasi sukses).
+        // Tidak ada logic pengurangan saldo di sini.
+
+        // 2. Tambahkan ke Library (berlaku untuk semua metode pembayaran)
+        foreach ($purchasedGames as $item) {
+            try {
+                $user->games()->attach($item['id'], [
+                    'purchase_price' => $item['final_price'],
+                    'transaction_id' => $transactionId,
+                    'created_at' => now(),
+                    'updated_at' => now(),
+                    'purchase_method' => $paymentMethod, // Simpan metode pembayaran
+                ]);
+            } catch (\Exception $e) {
+                // Abaikan jika game sudah dimiliki
+                continue; 
+            }
+        }
+        
+        // 3. Siapkan data transaksi untuk halaman sukses
         $transactionData = [
             'id' => $transactionId,
             'user_id' => $user->id,
             'user_name' => $user->name,
             'total' => $totalTransaction,
-            'method' => $request->payment_method,
+            'method' => $paymentMethod,
             'date' => now()->format('d F Y H:i:s'),
             'items' => $purchasedGames,
         ];
@@ -156,7 +175,7 @@ class CartController extends Controller
         return redirect()->route('cart.success');
     }
 
-    // Halaman Sukses (UPDATE)
+    // Halaman Sukses (TIDAK ADA PERUBAHAN)
     public function success()
     {
         $transaction = Session::get('last_transaction');
@@ -165,12 +184,10 @@ class CartController extends Controller
             return redirect()->route('store.index')->with('error', 'Tidak ada riwayat transaksi ditemukan.');
         }
 
-        // Kita biarkan session 'last_transaction' tetap ada agar bisa direfresh
-        // Jika butuh download receipt, kita buat route baru
         return view('cart.success', compact('transaction'));
     }
 
-    // FITUR BARU: Download Receipt/Nota
+    // FITUR BARU: Download Receipt/Nota (TAMBAHKAN DETAIL METHOD)
     public function downloadReceipt()
     {
         $transaction = Session::get('last_transaction');
@@ -179,16 +196,15 @@ class CartController extends Controller
             return redirect()->route('store.index');
         }
 
-        // Kita akan menggunakan template sederhana untuk receipt, 
-        // karena tidak ada library PDF yang terinstal, kita akan buat file teks/HTML yang didownload.
-        
         $receiptContent = "========================================\n";
         $receiptContent .= "         STEAMCLONE RECEIPT\n";
         $receiptContent .= "========================================\n";
         $receiptContent .= "Transaction ID: " . $transaction['id'] . "\n";
         $receiptContent .= "Date: " . $transaction['date'] . "\n";
         $receiptContent .= "Customer: " . $transaction['user_name'] . "\n";
-        $receiptContent .= "Payment Method: " . ucfirst($transaction['method']) . "\n";
+        // Tampilkan Metode Pembayaran
+        $method = $transaction['method'] === 'kukus_money' ? 'Kukus Money' : ucfirst($transaction['method']);
+        $receiptContent .= "Payment Method: " . $method . "\n"; 
         $receiptContent .= "----------------------------------------\n";
         $receiptContent .= "ITEMS:\n";
         
@@ -201,7 +217,6 @@ class CartController extends Controller
         $receiptContent .= "========================================\n";
         $receiptContent .= "Thank you for your purchase!\n";
 
-        // Mengirim response sebagai file download
         return response($receiptContent, 200)
                 ->header('Content-Type', 'text/plain')
                 ->header('Content-Disposition', 'attachment; filename="receipt-' . $transaction['id'] . '.txt"');

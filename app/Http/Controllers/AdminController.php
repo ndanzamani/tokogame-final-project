@@ -6,6 +6,7 @@ use App\Models\User;
 use App\Models\RefundRequest;
 use App\Models\Game;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB; // Import DB facade
 
 class AdminController extends Controller
 {
@@ -16,8 +17,23 @@ class AdminController extends Controller
         // 1. Publisher Requests (Pending)
         $publisherRequests = User::where('publisher_request_status', 'pending')->get();
         
-        // 2. Refund Requests (Pending)
+        // 2. Refund Requests (Pending) - PASTIKAN AMBIL DATA HARGA DARI PIVOT
+        // Kita perlu mencari harga pembelian di tabel pivot 'game_user' secara manual karena relasi refund->game tidak otomatis membawa pivot data user.
         $refunds = RefundRequest::where('status', 'pending')->with(['user', 'game'])->orderBy('created_at', 'desc')->get();
+
+        // Tambahkan harga pembelian ke setiap request refund
+        foreach ($refunds as $refund) {
+             // Cari data pivot game_user berdasarkan user_id dan game_id
+             // Gunakan DB untuk mengambil data mentah dari tabel pivot
+             $purchaseData = DB::table('game_user')
+                                 ->where('user_id', $refund->user_id)
+                                 ->where('game_id', $refund->game_id)
+                                 ->first();
+             
+             // Tambahkan harga pembelian ke objek refund
+             $refund->purchase_price = $purchaseData ? $purchaseData->purchase_price : 0;
+        }
+
 
         // 3. Game Approval Requests (Pending) - FITUR BARU
         $pendingGames = Game::where('is_approved', false)->orderBy('created_at', 'desc')->get();
@@ -32,7 +48,6 @@ class AdminController extends Controller
         // Kita asumsikan game yang ditolak itu is_approved = false TAPI sudah dicek admin.
         // Untuk sederhana, kita bisa tambah status kolom 'status' di game, tapi karena struktur DB sudah fix,
         // kita anggap game yg tidak diapprove dan sudah lama / atau dihapus masuk sini.
-        // ATAU: Kita tampilkan History User Rejected & Refund History saja yg sudah jelas statusnya.
         
         $rejectedPublishers = User::where('publisher_request_status', 'rejected')->get();
         
@@ -42,8 +57,7 @@ class AdminController extends Controller
                             ->get();
 
         // Untuk Game History, karena kita tidak punya kolom 'rejected',
-        // Kita tampilkan game yang is_approved=false sebagai "Pending/Rejected Queue" di dashboard,
-        // Di sini kita tampilkan game yang sudah Approved sebagai "Published History".
+        // Kita tampilkan game yang sudah Approved sebagai "Published History".
         $publishedGames = Game::where('is_approved', true)->orderBy('created_at', 'desc')->get();
 
         return view('admin.history', compact('rejectedPublishers', 'processedRefunds', 'publishedGames'));
@@ -84,17 +98,38 @@ class AdminController extends Controller
         return redirect()->back()->with('success', 'Publisher request rejected.');
     }
 
-    // --- REFUND ACTIONS ---
+    // --- REFUND ACTIONS (UPDATE LOGIKA: SEMUA REFUND KE KUKUS MONEY) ---
     public function approveRefund($id)
     {
         $refund = RefundRequest::findOrFail($id);
         if ($refund->status !== 'pending') return back();
 
-        $refund->update(['status' => 'approved']);
-        // Hapus game dari user
-        $refund->user->games()->detach($refund->game_id);
+        $user = $refund->user;
+        $gameId = $refund->game_id;
 
-        return back()->with('success', 'Refund disetujui.');
+        // 1. Ambil harga pembelian dari tabel pivot game_user
+        $purchaseData = DB::table('game_user')
+            ->where('user_id', $user->id)
+            ->where('game_id', $gameId)
+            ->first();
+        
+        $refundAmount = $purchaseData ? (float)$purchaseData->purchase_price : 0.00;
+
+        if ($refundAmount <= 0) {
+            return back()->with('error', 'Gagal memproses refund: Harga pembelian tidak ditemukan atau 0.');
+        }
+
+        // 2. Setujui permintaan refund
+        $refund->update(['status' => 'approved']);
+        
+        // 3. Hapus game dari library user (tabel pivot)
+        $user->games()->detach($gameId);
+
+        // 4. Tambahkan dana ke Kukus Money user (Sesuai permintaan)
+        // Gunakan fungsi penambahan untuk menghindari masalah float.
+        $user->increment('kukus_money_balance', $refundAmount);
+
+        return back()->with('success', 'Refund disetujui. Saldo Kukus Money user ' . $user->name . ' ditambahkan sebesar Rp' . number_format($refundAmount, 0, ',', '.') . '.');
     }
 
     public function rejectRefund($id)

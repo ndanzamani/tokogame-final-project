@@ -12,6 +12,12 @@
         <h1 class="text-3xl font-light text-white uppercase tracking-wider mb-8">
             Payment <span class="font-bold text-[#66c0f4]">Method</span>
         </h1>
+        
+        @if(session('error'))
+            <div class="bg-red-600 text-white p-4 rounded mb-6 border border-red-400 shadow-lg">
+                {{ session('error') }}
+            </div>
+        @endif
 
         <div class="flex flex-col md:flex-row gap-8 bg-[#16202d] p-8 border border-black shadow-2xl">
             
@@ -20,11 +26,27 @@
                 <form action="{{ route('cart.process') }}" method="POST">
                     @csrf
                     
+                    @php $kukusMoneyBalance = Auth::user()->kukus_money_balance ?? 0; @endphp
+                    
                     <div class="mb-6">
                         <label class="block text-[#66c0f4] text-xs font-bold uppercase mb-2">Pilih Metode Pembayaran</label>
                         <div class="space-y-2">
+                            
+                            {{-- BARU: Opsi Kukus Money --}}
+                            <label class="flex flex-col bg-[#2a3f5a] p-3 rounded cursor-pointer border border-transparent hover:border-white group">
+                                <div class="flex items-center">
+                                    <input type="radio" name="payment_method" value="kukus_money" class="form-radio text-red-500 focus:ring-0">
+                                    <span class="ml-3 text-white font-black uppercase text-base group-hover:text-red-400">Kukus Money</span>
+                                    <span class="ml-auto text-sm text-gray-400">Digital Wallet</span>
+                                </div>
+                                <div class="mt-2 ml-7 text-xs text-red-300 font-bold">
+                                    Saldo: Rp {{ number_format($kukusMoneyBalance, 0, ',', '.') }}
+                                </div>
+                            </label>
+
+                            {{-- Metode Pihak Ketiga --}}
                             <label class="flex items-center bg-[#2a3f5a] p-3 rounded cursor-pointer border border-transparent hover:border-white group">
-                                <input type="radio" name="payment_method" value="dana" class="form-radio text-[#66c0f4] focus:ring-0" checked>
+                                <input type="radio" name="payment_method" value="dana" class="form-radio text-[#66c0f4] focus:ring-0">
                                 <span class="ml-3 text-white font-bold group-hover:text-[#66c0f4]">DANA</span>
                                 <span class="ml-auto text-xs text-gray-400">E-Wallet</span>
                             </label>

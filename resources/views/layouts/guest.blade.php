@@ -53,8 +53,25 @@
                 </form>
             </div>
 
-            {{-- KANAN: USER / AUTH (DI UPDATE DENGAN CART) --}}
+            {{-- KANAN: USER / AUTH (DI UPDATE DENGAN CART & KUKUS MONEY) --}}
             <div class="flex items-center space-x-3 flex-shrink-0">
+                
+                @auth
+                    {{-- TOMBOL TOPUP KUKUS MONEY (BARU) --}}
+                    <a href="{{ route('kukus.topup.create') }}" class="bg-red-600 hover:bg-red-500 text-white px-3 py-1 rounded-[2px] text-xs font-bold uppercase tracking-wider shadow-lg flex items-center gap-1 transition">
+                        <span class="text-xs font-black">Rp</span> Top Up
+                    </a>
+                    
+                    {{-- INFO KUKUS MONEY & USER --}}
+                    <div class="text-right hidden sm:block leading-tight mr-2">
+                        <div class="text-[#66c0f4] font-bold text-sm truncate max-w-[150px]">{{ Auth::user()->name }}</div>
+                        {{-- Tampilkan Kukus Money --}}
+                        <div class="text-[10px] text-gray-400 font-mono">
+                            <span class="text-red-400 font-black">Kukus Money:</span> 
+                            Rp {{ number_format(Auth::user()->kukus_money_balance ?? 0, 0, ',', '.') }}
+                        </div>
+                    </div>
+                @endauth
                 
                 {{-- === TOMBOL CART BARU DI SINI (SEBELAH KIRI PROFILE) === --}}
                 <a href="{{ route('cart.index') }}" class="relative group mr-2 p-1 rounded hover:bg-[#212c3d] transition">
@@ -72,13 +89,7 @@
                 {{-- === END TOMBOL CART === --}}
 
                 @auth
-                    {{-- 1. Info User (Nama & Saldo) --}}
-                    <div class="text-right hidden sm:block leading-tight mr-2">
-                        <div class="text-[#66c0f4] font-bold text-sm truncate max-w-[150px]">{{ Auth::user()->name }}</div>
-                        <div class="text-[10px] text-gray-400 font-mono">Rp 0</div>
-                    </div>
-
-                    {{-- 2. Profile Picture & Dropdown --}}
+                    {{-- 2. Profile Picture & Dropdown (Sisa dari guest.blade.php) --}}
                     <div class="relative" x-data="{ open: false }">
                         {{-- Tombol Gambar Profile --}}
                         <button @click="open = !open" class="flex items-center gap-2 focus:outline-none group">
@@ -108,7 +119,10 @@
                                 <div class="uppercase tracking-widest text-[10px] font-bold text-gray-500 mb-1">Signed in as</div>
                                 <div class="font-bold text-white truncate">{{ Auth::user()->email }}</div>
                             </div>
-
+                            
+                            <a href="{{ route('kukus.topup.create') }}" class="block px-4 py-2 hover:bg-[#dcdedf] hover:text-[#171a21] transition font-bold text-red-400">
+                                + Top Up Kukus Money
+                            </a>
                             <a href="{{ route('profile.edit') }}" class="block px-4 py-2 hover:bg-[#dcdedf] hover:text-[#171a21] transition font-bold text-white">Edit Profile / Avatar</a>
                             <a href="{{ route('library.index') }}" class="block px-4 py-2 hover:bg-[#dcdedf] hover:text-[#171a21] transition">My Games</a>
                             
@@ -129,6 +143,9 @@
                     <a href="{{ route('login') }}" class="text-xs font-bold text-white hover:text-blue-400 uppercase">Login</a>
                     <span class="text-gray-600">|</span>
                     <a href="{{ route('register') }}" class="text-xs font-bold text-white hover:text-blue-400 uppercase">Register</a>
+                    <a href="{{ route('login') }}" class="bg-[#5c7e10] hover:bg-[#76a113] text-white font-xs px-3 py-1 rounded-[2px] flex items-center gap-2 transition ml-2 shadow-lg">
+                        <span class="font-bold">Install Steam</span>
+                    </a>
                 @endauth
             </div>
         </div>

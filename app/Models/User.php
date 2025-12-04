@@ -24,7 +24,8 @@ class User extends Authenticatable
         'password',
         'role',
         'publisher_request_status',
-        'profile_photo_path', // Tambahkan ini agar bisa di-save
+        'profile_photo_path',
+        'kukus_money_balance', // BARU: Tambahkan Kukus Money
     ];
 
     /**
@@ -47,6 +48,7 @@ class User extends Authenticatable
         return [
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
+            'kukus_money_balance' => 'float', // Cast sebagai float untuk perhitungan
         ];
     }
 
@@ -55,7 +57,7 @@ class User extends Authenticatable
     {
         // Menggunakan withPivot untuk mengakses data tambahan dari tabel pivot (game_user)
         return $this->belongsToMany(Game::class, 'game_user')
-                    ->withPivot('purchase_price', 'transaction_id', 'created_at');
+                    ->withPivot('purchase_price', 'transaction_id', 'created_at', 'purchase_method');
     }
     // --- END RELASI BARU ---
 

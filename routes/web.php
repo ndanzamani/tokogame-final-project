@@ -7,6 +7,7 @@ use App\Http\Controllers\LibraryController;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\RefundController;
 use App\Http\Controllers\CartController;
+use App\Http\Controllers\TopupController; // BARU: Import TopupController
 use Illuminate\Support\Facades\Route;
 
 // --- EXISTING ROUTES ---
@@ -34,6 +35,11 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/dashboard', function () {
         return view('dashboard');
     })->name('dashboard');
+
+    // --- KUKUS MONEY TOPUP ROUTES (BARU) ---
+    Route::get('/kukus-money/topup', [TopupController::class, 'create'])->name('kukus.topup.create');
+    Route::post('/kukus-money/topup', [TopupController::class, 'store'])->name('kukus.topup.store');
+    // --- END KUKUS MONEY ---
 
     Route::get('/library', [LibraryController::class, 'index'])->name('library.index');
     Route::post('/shelf', [LibraryController::class, 'storeShelf'])->name('shelf.store');

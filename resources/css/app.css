@@ -12,3 +12,26 @@
     /* Garis tipis aksen biru di sebelah kiri */
     border-left: 4px solid #4A90E2; 
 }
+
+input[type="text"], 
+input[type="email"], 
+input[type="password"] {
+    background-color: #2a475e !important;
+    color: white !important;
+    border: 1px solid #000 !important;
+}
+
+input[type="text"]:focus, 
+input[type="email"]:focus, 
+input[type="password"]:focus {
+    border-color: #66c0f4 !important;
+    ring: 0 !important;
+}
+
+label {
+    color: #b8b6b4 !important;
+    font-weight: bold;
+    text-transform: uppercase;
+    font-size: 0.75rem;
+    letter-spacing: 0.05em;
+}

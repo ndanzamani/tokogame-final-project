@@ -13,8 +13,10 @@ Route::get('/search', [GameController::class, 'search'])->name('games.search');
 // --- AUTHENTICATED USERS ROUTES ---
 Route::middleware('auth')->group(function () {
     // Dashboard User (Arahkan ke store atau custom dashboard)
-    Route::get('/dashboard', [GameController::class, 'index'])->name('dashboard');
-    
+    Route::get('/dashboard', function () {
+    return view('dashboard');
+})->middleware(['auth', 'verified'])->name('dashboard');
+
     // Profile Management
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');

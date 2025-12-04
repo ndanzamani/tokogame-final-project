@@ -47,16 +47,22 @@
                                         @else
                                             <span class="px-3 py-1 inline-flex text-xs leading-5 font-semibold rounded-full bg-yellow-900 text-yellow-200 border border-yellow-700">⏳ Pending Review</span>
                                         @endif
-                                        {{-- Catatan: Jika ingin status "Ditolak", kita perlu kolom baru di tabel `games`. Untuk saat ini, game yang ditolak admin dihapus, jadi tidak muncul di sini. Jika diedit, status kembali Pending. --}}
                                     </td>
                                     <td class="px-4 py-4 text-sm">{{ $game->updated_at->format('d M Y H:i') }}</td>
                                     <td class="px-4 py-4 whitespace-nowrap text-sm font-medium">
                                         <div class="flex gap-2">
                                             {{-- Tombol View --}}
-                                            <a href="{{ route('game.show', $game) }}" class="bg-blue-600 hover:bg-blue-500 text-white px-3 py-1 rounded text-xs uppercase font-bold" target="_blank">View Page</a>
+                                            <a href="{{ route('game.show', $game) }}" class="bg-blue-600 hover:bg-blue-500 text-white px-3 py-1 rounded text-xs uppercase font-bold" target="_blank">View</a>
                                             
                                             {{-- Tombol Edit --}}
-                                            <a href="{{ route('games.edit', $game) }}" class="bg-gray-600 hover:bg-gray-500 text-white px-3 py-1 rounded text-xs uppercase font-bold">Edit Details</a>
+                                            <a href="{{ route('games.edit', $game) }}" class="bg-gray-600 hover:bg-gray-500 text-white px-3 py-1 rounded text-xs uppercase font-bold">Edit</a>
+
+                                            {{-- Tombol Delete --}}
+                                            <form action="{{ route('games.destroy', $game) }}" method="POST" onsubmit="return confirm('Are you sure you want to delete this game?');">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" class="bg-red-600 hover:bg-red-500 text-white px-3 py-1 rounded text-xs uppercase font-bold">Delete</button>
+                                            </form>
                                         </div>
                                     </td>
                                 </tr>

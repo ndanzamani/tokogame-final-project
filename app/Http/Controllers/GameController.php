@@ -175,8 +175,20 @@ class GameController extends Controller
 
     public function destroy(Game $game)
     {
-        $game->delete();
-        return redirect()->route('admin.dashboard')->with('success', 'Game dihapus');
+        $user = Auth::user();
+
+        // Authorization: Allow if Admin OR if Publisher owns the game
+        if ($user->isAdmin()) {
+            $game->delete();
+            return redirect()->route('admin.dashboard')->with('success', 'Game dihapus');
+        } 
+        
+        if ($user->isPublisher() && $user->name === $game->publisher) {
+            $game->delete();
+            return redirect()->route('publisher.dashboard')->with('success', 'Game berhasil dihapus.');
+        }
+
+        abort(403, 'Unauthorized action.');
     }
 
     // --- FITUR BARU: PUBLISHER DASHBOARD ---

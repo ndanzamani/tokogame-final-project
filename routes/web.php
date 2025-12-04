@@ -72,8 +72,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::put('/games/{game}', [GameController::class, 'update'])->name('games.update');
         
         // Delete Game (Soft delete/hide) - Publisher hanya boleh delete game miliknya
-        // Sebaiknya ditangani dengan logic di controller atau form di dashboard publisher.
-        // Untuk sekarang, kita biarkan hanya Admin yang bisa delete permanen, publisher hanya bisa edit.
+        Route::delete('/games/{game}', [GameController::class, 'destroy'])->name('games.destroy');
 
     });
 

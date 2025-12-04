@@ -21,7 +21,9 @@ return new class extends Migration
             // Kolom tambahan untuk menyimpan data pembelian
             $table->decimal('purchase_price', 10, 2); // Harga saat dibeli (setelah diskon)
             $table->string('transaction_id')->unique(); // ID unik transaksi
-            $table->string('purchase_method')->nullable()->after('transaction_id'); // BARU: Metode pembelian
+            
+            // PERBAIKAN: Hapus ->after('transaction_id') karena error di MySQL saat create table
+            $table->string('purchase_method')->nullable(); 
             
             // Pastikan tidak ada duplikasi game untuk user yang sama
             $table->unique(['user_id', 'game_id']);

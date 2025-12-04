@@ -74,14 +74,6 @@ class GameController extends Controller
         return redirect()->back()->with('success', 'Added to cart');
     }
 
-    public function libraryIndex()
-    {
-        // Simulasi: user memiliki semua game yang disetujui (is_approved=true)
-        $ownedGames = Game::where('is_approved', true)->get();
-        $userShelves = Shelf::where('user_id', Auth::id())->with('games')->get();
-        return view('library', compact('ownedGames', 'userShelves'));
-    }
-
     public function storeShelf(Request $request)
     {
         $request->validate([

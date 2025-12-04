@@ -7,6 +7,7 @@ use App\Models\Game;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Auth; // Import Auth
 use Illuminate\Support\Str; // Import Str untuk transaction ID
+use Illuminate\Support\Facades\DB; // Import DB facade
 // use Barryvdh\DomPDF\Facade\Pdf; // Tidak digunakan, tetap simulasi
 
 class CartController extends Controller
@@ -111,66 +112,71 @@ class CartController extends Controller
 
         $user = Auth::user();
         $paymentMethod = $request->payment_method;
-        $totalTransaction = 0;
-        $purchasedGames = [];
         $transactionId = 'TXN-' . strtoupper(Str::random(10));
 
-        // 1. Hitung Total dan Lakukan Cek Saldo jika menggunakan Kukus Money
-        foreach ($cart as $item) {
-            $price = $item['price'];
-            if(isset($item['discount_percent']) && $item['discount_percent'] > 0) {
-                $price = $price * (1 - $item['discount_percent'] / 100);
-            }
-            $totalTransaction += $price;
-            $purchasedGames[] = array_merge($item, ['final_price' => $price]);
+        try {
+            DB::transaction(function () use ($user, $cart, $paymentMethod, $transactionId) {
+                // Lock user record for update to prevent race conditions
+                $user = \App\Models\User::where('id', $user->id)->lockForUpdate()->first();
+
+                $totalTransaction = 0;
+                $purchasedGames = [];
+
+                // 1. Hitung Total
+                foreach ($cart as $item) {
+                    $price = $item['price'];
+                    if(isset($item['discount_percent']) && $item['discount_percent'] > 0) {
+                        $price = $price * (1 - $item['discount_percent'] / 100);
+                    }
+                    $totalTransaction += $price;
+                    $purchasedGames[] = array_merge($item, ['final_price' => $price]);
+                }
+
+                // Logika Saldo Kukus Money
+                if ($paymentMethod === 'kukus_money') {
+                    if ($user->kukus_money_balance < $totalTransaction) {
+                        throw new \Exception('Saldo Kukus Money Anda (Rp' . number_format($user->kukus_money_balance, 0, ',', '.') . 
+                                         ') tidak cukup untuk total pembelian Rp' . number_format($totalTransaction, 0, ',', '.') . '.');
+                    }
+                    
+                    // Berhasil: Kurangi saldo Kukus Money
+                    $user->kukus_money_balance -= $totalTransaction;
+                    $user->save();
+                } 
+
+                // 2. Tambahkan ke Library (berlaku untuk semua metode pembayaran)
+                foreach ($purchasedGames as $item) {
+                    try {
+                        $user->games()->attach($item['id'], [
+                            'purchase_price' => $item['final_price'],
+                            'transaction_id' => $transactionId,
+                            'created_at' => now(),
+                            'updated_at' => now(),
+                            'purchase_method' => $paymentMethod, // Simpan metode pembayaran
+                        ]);
+                    } catch (\Exception $e) {
+                        // Abaikan jika game sudah dimiliki
+                        continue; 
+                    }
+                }
+                
+                // 3. Siapkan data transaksi untuk halaman sukses
+                $transactionData = [
+                    'id' => $transactionId,
+                    'user_id' => $user->id,
+                    'user_name' => $user->name,
+                    'total' => $totalTransaction,
+                    'method' => $paymentMethod,
+                    'date' => now()->format('d F Y H:i:s'),
+                    'items' => $purchasedGames,
+                ];
+
+                Session::put('last_transaction', $transactionData);
+                Session::forget('cart');
+            });
+        } catch (\Exception $e) {
+            return redirect()->route('cart.checkout')->with('error', $e->getMessage());
         }
-
-        // Logika Saldo Kukus Money
-        if ($paymentMethod === 'kukus_money') {
-            if ($user->kukus_money_balance < $totalTransaction) {
-                // Gagal: Saldo tidak cukup
-                return redirect()->route('cart.checkout')
-                                 ->with('error', 'Saldo Kukus Money Anda (Rp' . number_format($user->kukus_money_balance, 0, ',', '.') . 
-                                 ') tidak cukup untuk total pembelian Rp' . number_format($totalTransaction, 0, ',', '.') . '.');
-            }
-            
-            // Berhasil: Kurangi saldo Kukus Money
-            $user->kukus_money_balance -= $totalTransaction;
-            $user->save();
-        } 
-        // Logika untuk metode pembayaran pihak ketiga (dana, qris, bca, visa)
-        // Menurut permintaan, pembayaran pihak ketiga selalu berhasil (simulasi sukses).
-        // Tidak ada logic pengurangan saldo di sini.
-
-        // 2. Tambahkan ke Library (berlaku untuk semua metode pembayaran)
-        foreach ($purchasedGames as $item) {
-            try {
-                $user->games()->attach($item['id'], [
-                    'purchase_price' => $item['final_price'],
-                    'transaction_id' => $transactionId,
-                    'created_at' => now(),
-                    'updated_at' => now(),
-                    'purchase_method' => $paymentMethod, // Simpan metode pembayaran
-                ]);
-            } catch (\Exception $e) {
-                // Abaikan jika game sudah dimiliki
-                continue; 
-            }
-        }
-        
-        // 3. Siapkan data transaksi untuk halaman sukses
-        $transactionData = [
-            'id' => $transactionId,
-            'user_id' => $user->id,
-            'user_name' => $user->name,
-            'total' => $totalTransaction,
-            'method' => $paymentMethod,
-            'date' => now()->format('d F Y H:i:s'),
-            'items' => $purchasedGames,
-        ];
-
-        Session::put('last_transaction', $transactionData);
-        Session::forget('cart');
 
         return redirect()->route('cart.success');
     }

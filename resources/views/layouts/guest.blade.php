@@ -13,31 +13,29 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 
-<body class="font-sans antialiased bg-[#1b2838] text-gray-200 flex flex-col min-h-screen">
+<body class="font-sans antialiased bg-[#242629] text-gray-200 flex flex-col min-h-screen">
 
     {{-- 1. HEADER --}}
-    <header class="bg-[#171a21] border-b-4 border-black shadow-xl sticky top-0 z-50">
+    <header class="bg-[#16161a] border-b-4 border-black shadow-xl sticky top-0 z-50">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 flex justify-between items-center gap-4">
 
             {{-- KIRI: LOGO & NAVIGASI (TETAP SAMA) --}}
             <div class="flex items-center space-x-6 flex-shrink-0">
-                <a href="{{ route('store.index') }}" class="flex items-center gap-2 group">
-                    <img src="{{ asset('logo.png') }}" alt="Logo"
-                        class="h-10 w-auto object-contain drop-shadow-md hover:scale-105 transition">
+                <a href="{{ route('store.index') }}" class="flex items-center mb-2 gap-2 group">
+                    <img src="{{ asset('logoo.png') }}" alt="Logo"
+                        class="h-10 mb-6 w-auto object-contain drop-shadow-md hover:scale-105 transition">
                     <h1 class="text-2xl font-black tracking-widest uppercase hidden md:block">
-                        <span class="text-white">STEAM</span>
-                        <span class="text-gray-500 group-hover:text-white transition"
-                            style="-webkit-text-stroke: 0px;">CLONE</span>
+                       <span class="text-white"><i>KU</span><span class="text-[#7f5af0]">KUS</i></span>
                     </h1>
                 </a>
 
                 <nav class="hidden lg:flex space-x-1 ml-4">
                     <a href="{{ route('store.index') }}"
-                        class="px-3 py-2 font-bold text-blue-400 hover:text-white transition uppercase text-sm">Store</a>
+                        class="px-3 py-2 font-bold text-white hover:text-[#7f5af0] transition uppercase text-sm">Store</a>
                     <a href="{{ route('library.index') }}"
-                        class="px-3 py-2 font-bold text-gray-400 hover:text-white transition uppercase text-sm">Library</a>
+                        class="px-3 py-2 font-bold text-white hover:text-[#7f5af0] transition uppercase text-sm">Library</a>
                     <a href="{{ route('daily.challenge') }}"
-                        class="px-3 py-2 font-bold text-gray-400 hover:text-white transition uppercase text-sm">Daily Challenge</a>
+                        class="px-3 py-2 font-bold text-white hover:text-[#7f5af0] transition uppercase text-sm">Daily Challenge</a>
                 </nav>
             </div>
 
@@ -45,7 +43,7 @@
             <div class="flex-grow max-w-md mx-4 hidden md:block">
                 <form action="{{ route('games.search') }}" method="GET" class="relative group">
                     <input type="text" name="q" placeholder="search" value="{{ request('q') }}"
-                        class="w-full bg-[#316282] text-black placeholder-gray-900 font-bold border-2 border-transparent focus:border-white rounded-sm py-1 px-3 shadow-inner focus:bg-white transition-all outline-none italic hover:bg-[#4c84a5]">
+                        class="w-full bg-[#242629] text-black placeholder-gray-900 font-bold border-2 border-transparent focus:border-purple rounded-2xl py-1 px-3 shadow-inner focus:bg-purple transition-all outline-none italic hover:bg-[#7f5af0]">
                     <button type="submit"
                         class="absolute right-1 top-1/2 transform -translate-y-1/2 p-1 text-gray-900 hover:text-blue-600">
                         🔍
@@ -58,7 +56,7 @@
                 
                 @auth
                     {{-- TOMBOL TOPUP KUKUS MONEY (BARU) --}}
-                    <a href="{{ route('kukus.topup.create') }}" class="bg-red-600 hover:bg-red-500 text-white px-3 py-1 rounded-[2px] text-xs font-bold uppercase tracking-wider shadow-lg flex items-center gap-1 transition">
+                    <a href="{{ route('kukus.topup.create') }}" class="bg-red-600 hover:bg-red-500 text-white px-3 py-1 rounded-2xl text-xs font-bold uppercase tracking-wider shadow-lg flex items-center gap-1 transition">
                         <span class="text-xs font-black">Rp</span> Top Up
                     </a>
                     
@@ -80,7 +78,7 @@
                 
                 {{-- === TOMBOL CART BARU DI SINI (SEBELAH KIRI PROFILE) === --}}
                 <a href="{{ route('cart.index') }}" class="relative group mr-2 p-1 rounded hover:bg-[#212c3d] transition">
-                    <div class="bg-[#5c7e10] hover:bg-[#76a113] text-white px-3 py-1 rounded-[2px] text-xs font-bold uppercase tracking-wider shadow-lg flex items-center gap-2">
+                    <div class="bg-[#2cb67d] hover:bg-[#2cb67d] text-white px-3 py-1 rounded-2xl text-xs font-bold uppercase tracking-wider shadow-lg flex items-center gap-2">
                         <span>Cart</span>
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
@@ -145,11 +143,10 @@
                         </div>
                     </div>
                 @else
-                    <a href="{{ route('login') }}" class="text-xs font-bold text-white hover:text-blue-400 uppercase">Login</a>
+                    <a href="{{ route('login') }}" class="text-xs font-bold text-white hover:text-[#7f5af0] uppercase">Login</a>
                     <span class="text-gray-600">|</span>
-                    <a href="{{ route('register') }}" class="text-xs font-bold text-white hover:text-blue-400 uppercase">Register</a>
-                    <a href="{{ route('login') }}" class="bg-[#5c7e10] hover:bg-[#76a113] text-white font-xs px-3 py-1 rounded-[2px] flex items-center gap-2 transition ml-2 shadow-lg">
-                        <span class="font-bold">Install Steam</span>
+                    <a href="{{ route('register') }}" class="text-xs font-bold text-white hover:text-[#7f5af0] uppercase">Register</a>
+                    <a href="{{ route('login') }}" >
                     </a>
                 @endauth
             </div>
@@ -166,16 +163,16 @@
     </main>
 
     {{-- FOOTER (TETAP SAMA) --}}
-    <footer class="bg-[#171a21] text-[#8f98a0] py-12 mt-auto border-t-4 border-black shadow-[0_-10px_40px_rgba(0,0,0,0.5)] relative z-10">
+    <footer class="bg-[#16161a] text-[#8f98a0] py-12 mt-auto border-t-4 border-black shadow-[0_-10px_40px_rgba(0,0,0,0.5)] relative z-10">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex flex-col md:flex-row justify-between items-start gap-8 mb-8 border-b border-gray-700 pb-8">
                 <div class="max-w-sm">
                     <div class="flex items-center gap-2 mb-4 opacity-80 hover:opacity-100 transition">
-                        <img src="{{ asset('Logo.png') }}" alt="Logo" class="h-8 grayscale">
-                        <span class="text-xl font-bold text-white tracking-widest">STEAMCLONE</span>
+                        <img src="{{ asset('Logoo.png') }}" alt="Logo" class="h-12 mb-6 grayscale">
+                        <span class="text-2xl font-bold text-white tracking-widest"><i>KU</span><span class="text-[#7f5af0] text-2xl font-bold tracking-widest">KUS</i></span>
                     </div>
                     <p class="text-xs leading-relaxed">
-                        © 2025 SteamClone Corporation. <br>
+                        © 2025 Kukus. <br>
                         Tugas Kelompok Pemrograman Web.
                     </p>
                 </div>
@@ -201,7 +198,7 @@
                     <span class="text-gray-600">|</span>
                     <a href="{{ route('pages.terms') }}" class="hover:text-white">Perjanjian Pelanggan</a>
                     <span class="text-gray-600">|</span>
-                    <a href="{{ route('refunds.create') }}" class="hover:text-white text-[#66c0f4]">Refunds</a>
+                    <a href="{{ route('refunds.create') }}" class="hover:text-white text-[#7f5af0]">Refunds</a>
                 </div>
             </div>
         </div>
@@ -209,7 +206,7 @@
 
     @stack('scripts')
 
-        @livewireScripts
+      
         
         {{-- AFK / Zen Mode Overlay --}}
         <x-afk-overlay />

@@ -4,7 +4,7 @@
 {{-- Load Anime.js --}}
 <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
 
-<div class="bg-[#1b2838] min-h-screen font-sans overflow-x-hidden relative perspective-[2000px]">
+<div class="bg-[#242629] min-h-screen font-sans overflow-x-hidden relative perspective-[2000px]">
     
     {{-- Main Content --}}
     <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 pb-32">
@@ -13,13 +13,13 @@
         <div class="flex items-center justify-between mb-12 border-b-4 border-black pb-4">
             <div class="flex items-end gap-4">
                 <h2 class="text-5xl font-black uppercase tracking-tighter text-white leading-none">LIBRARY</h2>
-                <span class="text-gray-400 font-bold mb-1 text-sm bg-black px-2 py-1 rounded border border-gray-600">
+                <span class="text-gray-400 font-bold mb-1 text-sm bg-black px-2 py-1 rounded border border-[#7f5af0]">
                     COLLECTIONS
                 </span>
             </div>
             
             {{-- TOMBOL NEW SHELF --}}
-            <button onclick="openNewShelfModal()" class="bg-blue-600 hover:bg-blue-500 text-white font-bold px-4 py-2 border border-transparent hover:border-blue-400 shadow-lg transition text-xs tracking-widest flex items-center gap-2">
+            <button onclick="openNewShelfModal()" class="bg-[#7f5af0] hover:bg-[#7f5af0] rounded-2xl text-white font-bold px-4 py-2 border border-transparent hover:border-purple shadow-lg transition text-xs tracking-widest flex items-center gap-2">
                 <span class="text-lg leading-none">+</span> NEW SHELF
             </button>
         </div>
@@ -66,15 +66,15 @@
         <div class="absolute inset-0 bg-black/80 backdrop-blur-sm opacity-0 transition-opacity duration-300 pointer-events-auto" id="newShelfBackdrop" onclick="closeNewShelfModal()"></div>
         
         <div id="newShelfCard" class="bg-[#1b2838] w-full max-w-2xl p-1 border-t-4 border-[#3d4450] shadow-2xl transform scale-95 opacity-0 transition-all duration-300 pointer-events-auto relative">
-            <div class="bg-[#1b2838] p-4 flex justify-between items-center">
+            <div class="bg-[#16161a] p-4 flex justify-between items-center">
                 <h2 class="text-2xl font-light text-white tracking-wide">Create New Collection</h2>
                 <button onclick="closeNewShelfModal()" class="text-gray-400 hover:text-white transition font-bold text-xl">X</button>
             </div>
 
-            <div class="p-8 bg-[#212b36] border-t border-black">
+            <div class="p-8 bg-[#242629] border-t border-black">
                 <div class="mb-8">
                     <label class="block text-[#3b9de9] text-xs font-bold mb-2 uppercase tracking-wider">COLLECTION NAME</label>
-                    <input type="text" id="shelfNameInput" class="w-full bg-[#1b2838] border border-[#10161d] text-white px-4 py-3 rounded-sm shadow-inner focus:outline-none focus:border-[#3b9de9] focus:bg-[#253347] transition" placeholder="e.g. RPG Favorites...">
+                    <input type="text" id="shelfNameInput" class="w-full bg-[#72757e] border border-[#7f5af0] text-white px-4 py-3 rounded-2xl shadow-inner focus:outline-none focus:border-[#7f5af0] focus:bg-[#7f5af0] transition">
                 </div>
 
                 <label class="block text-[#67c1f5] text-xs font-bold mb-4 uppercase tracking-wider">COLLECTION TYPE</label>
@@ -98,16 +98,16 @@
     <div id="gamePickerModal" class="fixed inset-0 z-[120] hidden flex items-center justify-center pointer-events-none font-sans">
         <div class="absolute inset-0 bg-black/90 backdrop-blur-md opacity-0 transition-opacity duration-300 pointer-events-auto" id="pickerBackdrop" onclick="closeGamePicker()"></div>
         <div id="pickerCard" class="bg-[#1b2838] w-full max-w-4xl h-[80vh] flex flex-col border-4 border-black shadow-2xl transform scale-95 opacity-0 transition-all duration-300 pointer-events-auto">
-            <div class="p-6 border-b border-black bg-[#212b36] flex justify-between items-center">
+            <div class="p-6 border-b border-black bg-[#242629] flex justify-between items-center">
                 <h2 class="text-2xl font-black text-white uppercase tracking-widest">SELECT GAMES</h2>
                 <button onclick="closeGamePicker()" class="text-gray-400 hover:text-white font-bold text-xl">X</button>
             </div>
-            <div class="flex-grow overflow-y-auto p-6 bg-[#16202d] custom-scrollbar">
+            <div class="flex-grow overflow-y-auto p-6 bg-[#16161a] custom-scrollbar">
                 <div id="pickerGamesList" class="grid grid-cols-2 md:grid-cols-4 gap-4">
                     {{-- Game List akan diinject via JS --}}
                 </div>
             </div>
-            <div class="p-6 bg-[#212b36] border-t border-black flex justify-end">
+            <div class="p-6 bg-[#242629] border-t border-black flex justify-end">
                 <button onclick="finishCreateShelf('manual')" class="bg-green-600 hover:bg-green-500 text-white font-black px-8 py-3 border-2 border-black shadow-lg hover:translate-y-[-2px] transition">CONFIRM</button>
             </div>
         </div>
@@ -119,18 +119,18 @@
     <div id="dynamicFilterModal" class="fixed inset-0 z-[120] hidden flex items-center justify-center pointer-events-none font-sans">
         <div class="absolute inset-0 bg-black/90 backdrop-blur-md opacity-0 transition-opacity duration-300 pointer-events-auto" id="filterBackdrop" onclick="closeDynamicFilter()"></div>
         <div id="filterCard" class="bg-[#1b2838] w-full max-w-lg p-1 border-4 border-black shadow-2xl transform scale-95 opacity-0 transition-all duration-300 pointer-events-auto">
-            <div class="p-6 border-b border-black bg-[#212b36]">
+            <div class="p-6 border-b border-black bg-[#16161a]">
                 <h2 class="text-xl font-black text-white uppercase tracking-widest flex items-center gap-2"><span class="text-yellow-400">⚡</span> DYNAMIC FILTER</h2>
             </div>
-            <div class="p-8 bg-[#16202d]">
+            <div class="p-8 bg-[#242629]">
                 <label class="block text-blue-400 text-xs font-bold mb-4 uppercase tracking-wider">SELECT A GENRE</label>
-                <select id="dynamicGenreSelect" class="w-full bg-[#1b2838] text-white border-2 border-gray-600 p-3 font-bold focus:border-blue-500 outline-none">
+                <select id="dynamicGenreSelect" class="w-full bg-[#242629] text-white border-2 border-gray-600 p-3 font-bold focus:border-blue-500 outline-none">
                     @foreach($ownedGames->pluck('genre')->unique() as $genre)
                         <option value="{{ $genre }}">{{ $genre }}</option>
                     @endforeach
                 </select>
             </div>
-            <div class="p-6 bg-[#212b36] border-t border-black flex justify-end">
+            <div class="p-6 bg-[#16161a] border-t border-black flex justify-end">
                 <button onclick="finishCreateShelf('dynamic')" class="bg-blue-600 hover:bg-blue-500 text-white font-black px-8 py-3 border-2 border-black shadow-lg hover:translate-y-[-2px] transition">CREATE SHELF</button>
             </div>
         </div>

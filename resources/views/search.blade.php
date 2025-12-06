@@ -1,7 +1,7 @@
 @extends('layouts.guest')
 
 @section('content')
-<div class="bg-[#1b2838] min-h-screen font-sans">
+<div class="bg-[#242629] min-h-screen font-sans">
     
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         
@@ -9,7 +9,7 @@
         <div class="flex justify-between items-center mb-6 border-b border-gray-600 pb-4">
             <h2 class="text-2xl font-black text-white uppercase tracking-wider">
                 @if(request('q'))
-                    Results for: "<span class="text-blue-400">{{ request('q') }}</span>"
+                    Results for: "<span class="text-purple-400">{{ request('q') }}</span>"
                 @else
                     All Products
                 @endif
@@ -72,7 +72,7 @@
                     @empty
                         <div class="p-8 text-center border-2 border-dashed border-gray-600 rounded">
                             <p class="text-gray-400 text-lg">No games found.</p>
-                            <a href="{{ route('games.search') }}" class="text-blue-400 hover:underline mt-2 inline-block">Clear Filters</a>
+                            <a href="{{ route('games.search') }}" class="text-purple-400 hover:underline mt-2 inline-block">Clear Filters</a>
                         </div>
                     @endforelse
 
@@ -85,16 +85,16 @@
 
             {{-- KOLOM KANAN: FILTER (SIDEBAR) --}}
             <div class="w-full md:w-1/4 flex-shrink-0">
-                <div class="bg-[#1b2838] border border-gray-600 rounded-sm p-4 sticky top-24">
+                <div class="bg-[#16161a] border border-gray-600 rounded-sm p-4 sticky top-24">
                     
                     {{-- Narrow by Price --}}
                     <div class="mb-6">
                         <h3 class="font-bold text-white text-sm mb-3 uppercase tracking-wide border-b border-gray-600 pb-1">Narrow by Price</h3>
                         <div class="space-y-2 text-sm text-[#556772]">
-                            <a href="{{ route('games.search', array_merge(request()->all(), ['price' => 'free'])) }}" class="block hover:text-white hover:bg-gray-700 p-1 rounded cursor-pointer transition {{ request('price') == 'free' ? 'text-blue-400 font-bold' : '' }}">
+                            <a href="{{ route('games.search', array_merge(request()->all(), ['price' => 'free'])) }}" class="block hover:text-white hover:bg-gray-700 p-1 rounded cursor-pointer transition {{ request('price') == 'free' ? 'text-[#7f5af0] font-bold' : '' }}">
                                 <span class="inline-block w-4 text-center">{{ request('price') == 'free' ? '✔' : '' }}</span> Free to Play
                             </a>
-                            <a href="{{ route('games.search', array_merge(request()->all(), ['price' => 'paid'])) }}" class="block hover:text-white hover:bg-gray-700 p-1 rounded cursor-pointer transition {{ request('price') == 'paid' ? 'text-blue-400 font-bold' : '' }}">
+                            <a href="{{ route('games.search', array_merge(request()->all(), ['price' => 'paid'])) }}" class="block hover:text-white hover:bg-gray-700 p-1 rounded cursor-pointer transition {{ request('price') == 'paid' ? 'text-[#7f5af0] font-bold' : '' }}">
                                 <span class="inline-block w-4 text-center">{{ request('price') == 'paid' ? '✔' : '' }}</span> Paid
                             </a>
                         </div>
@@ -106,8 +106,8 @@
                         <div class="space-y-1 text-sm text-[#556772]">
                             @foreach(['Action', 'RPG', 'Strategy', 'Adventure', 'Simulation', 'Horror', 'Indie', 'Racing'] as $genre)
                                 <a href="{{ route('games.search', array_merge(request()->all(), ['genre' => $genre])) }}" 
-                                   class="flex items-center gap-2 hover:text-white hover:bg-gray-700 p-1 rounded cursor-pointer transition {{ request('genre') == $genre ? 'text-blue-400 bg-gray-800' : '' }}">
-                                    <div class="w-4 h-4 border border-gray-500 rounded-sm flex items-center justify-center {{ request('genre') == $genre ? 'bg-blue-500 border-blue-500' : 'bg-[#101822]' }}">
+                                   class="flex items-center gap-2 hover:text-white hover:bg-gray-700 p-1 rounded cursor-pointer transition {{ request('genre') == $genre ? 'text-[#7f5af0] bg-gray-800' : '' }}">
+                                    <div class="w-4 h-4 border border-gray-500 rounded-sm flex items-center justify-center {{ request('genre') == $genre ? 'bg-purple-500 border-purple-500' : 'bg-[#101822]' }}">
                                         @if(request('genre') == $genre) <span class="text-white text-[10px]">✓</span> @endif
                                     </div>
                                     {{ $genre }}
@@ -117,7 +117,7 @@
                     </div>
 
                     @if(request()->has('q') || request()->has('genre') || request()->has('price'))
-                        <a href="{{ route('games.search') }}" class="block text-center w-full bg-gray-700 hover:bg-gray-600 text-white text-xs py-2 rounded mt-4">
+                        <a href="{{ route('games.search') }}" class="block text-center w-full bg-gray-700 hover:bg-purple-600 text-white text-xs py-2 rounded mt-4">
                             CLEAR ALL FILTERS
                         </a>
                     @endif

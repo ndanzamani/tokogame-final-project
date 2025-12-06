@@ -1,8 +1,8 @@
 @extends('layouts.guest')
 
 @section('content')
-<div class="bg-[#1b2838] min-h-screen flex items-center justify-center py-12">
-    <div class="max-w-3xl w-full bg-[#16202d] border-t-4 border-[#66c0f4] p-8 shadow-2xl text-white">
+<div class="bg-[#242629] min-h-screen flex items-center justify-center py-12">
+    <div class="max-w-3xl w-full bg-[#16161a] border-t-4 border-[#7f5af0] p-8 shadow-2xl text-white">
         
         <div class="mb-6 flex justify-center">
             <div class="bg-green-500/20 p-4 rounded-full border-2 border-green-500">
@@ -13,10 +13,10 @@
         </div>
 
         <h1 class="text-3xl font-black uppercase mb-2">Thank You, {{ $transaction['user_name'] ?? 'Customer' }}!</h1>
-        <p class="text-[#66c0f4] font-bold text-lg mb-6">Pembelian Anda Berhasil Diproses.</p>
+        <p class="text-[#7f5af0] font-bold text-lg mb-6">Pembelian Anda Berhasil Diproses.</p>
 
         {{-- DETAIL TRANSAKSI --}}
-        <div class="bg-[#2a3f5a] p-6 rounded-sm mb-8 text-left border border-gray-700">
+        <div class="bg-[#242629] p-6 rounded-sm mb-8 text-left border border-gray-700">
             <h3 class="text-xl font-bold mb-3 uppercase tracking-wider text-white">Transaction Details</h3>
             <div class="space-y-1 text-sm text-gray-300">
                 <div class="flex justify-between border-b border-gray-600 pb-1">
@@ -33,7 +33,7 @@
                 </div>
             </div>
 
-            <h4 class="text-base font-bold mt-4 mb-2 text-[#66c0f4]">Purchased Games:</h4>
+            <h4 class="text-base font-bold mt-4 mb-2 text-[#7f5af0]">Purchased Games:</h4>
             <ul class="space-y-1 text-sm">
                 @foreach ($transaction['items'] ?? [] as $item)
                     <li class="flex justify-between text-gray-400">
@@ -65,7 +65,7 @@
                 Download Nota
             </a>
 
-            <a href="{{ route('library.index') }}" class="bg-gradient-to-r from-[#06BFFF] to-[#2D73FF] hover:brightness-110 text-white font-bold text-sm uppercase py-3 px-6 rounded-sm shadow-lg transition">
+            <a href="{{ route('library.index') }}" class="bg-[#7f5af0] hover:brightness-110 text-white font-bold text-sm uppercase py-3 px-6 rounded-sm shadow-lg transition">
                 Lihat Library
             </a>
         </div>

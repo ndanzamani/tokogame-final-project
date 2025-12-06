@@ -1,11 +1,11 @@
 @extends('layouts.guest')
 
 @section('content')
-<div class="bg-[#1b2838] min-h-screen">
+<div class="bg-[#242629] min-h-screen">
     <div class="max-w-7xl mx-auto py-8">
         
         <h1 class="text-3xl font-light text-white uppercase tracking-wider mb-8">
-            Your <span class="font-bold text-[#66c0f4]">Shopping Cart</span>
+            Your <span class="font-bold text-[#7f5af0]">Shopping Cart</span>
         </h1>
 
         <div class="flex flex-col md:flex-row gap-8">
@@ -25,7 +25,7 @@
 
                 @if(count($cart) > 0)
                     @foreach($cart as $id => $item)
-                        <div class="flex bg-[#16202d] p-4 rounded-sm border border-transparent hover:bg-[#1f2c3d] hover:border-gray-600 transition group relative">
+                        <div class="flex bg-[#16161a] p-4 rounded-sm border border-transparent hover:bg-[#7f5af0] hover:border-gray-600 transition group relative">
                             {{-- Gambar --}}
                             <div class="w-32 h-16 bg-black mr-4 flex-shrink-0">
                                 <img src="{{ $item['cover_image'] }}" class="w-full h-full object-cover">
@@ -69,9 +69,9 @@
                         </div>
                     @endforeach
                 @else
-                    <div class="bg-[#16202d] p-12 text-center rounded">
+                    <div class="bg-[#16161a] p-12 text-center rounded">
                         <p class="text-white text-lg mb-4">Keranjang belanja Anda kosong.</p>
-                        <a href="{{ route('store.index') }}" class="bg-[#66c0f4] hover:bg-[#419ec0] text-white px-6 py-3 rounded font-bold uppercase text-sm inline-block">
+                        <a href="{{ route('store.index') }}" class="bg-[#7f5af0] text-white px-6 py-3 rounded font-bold uppercase text-sm inline-block">
                             Kembali ke Toko
                         </a>
                     </div>
@@ -81,7 +81,7 @@
             {{-- KOLOM KANAN: TOTAL --}}
             @if(count($cart) > 0)
             <div class="w-full md:w-1/4">
-                <div class="bg-[#16202d] p-6 rounded-sm sticky top-24">
+                <div class="bg-[#16161a] p-6 rounded-sm sticky top-24">
                     <h3 class="text-gray-400 text-sm font-bold uppercase mb-4">Estimated Total</h3>
                     
                     <div class="text-3xl font-black text-white mb-2">
@@ -89,7 +89,7 @@
                     </div>
                     <div class="text-xs text-gray-500 mb-6">Sales tax will be calculated during checkout where applicable.</div>
 
-                    <a href="{{ route('cart.checkout') }}" class="block w-full bg-gradient-to-r from-[#5c7e10] to-[#76a113] hover:brightness-110 text-white text-center py-4 rounded-sm font-bold text-lg shadow-lg mb-3">
+                    <a href="{{ route('cart.checkout') }}" class="block w-full bg-[#2cb67d] hover:brightness-110 text-white text-center py-4 rounded-sm font-bold text-lg shadow-lg mb-3">
                         Purchase for myself
                     </a>
                     

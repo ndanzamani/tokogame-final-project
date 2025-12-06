@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Register - SteamClone</title>
+    <title>Register</title>
 
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
@@ -19,7 +19,7 @@
 
         {{-- PANEL REGISTER (Style Gradient sama dengan Login) --}}
         <div class="relative z-10 w-full sm:max-w-md rounded-xl shadow-2xl overflow-hidden"
-            style="background: linear-gradient(to bottom, #2e2e2eff 80%, #000000ff 100%);">
+            style="background:black;">
 
             <div class="p-8 pb-4">
 
@@ -29,20 +29,17 @@
 
                         {{-- LOGO --}}
                         <a href="{{ url('/') }}" class="hover:opacity-80 transition-opacity duration-200">
-                            <img src="{{ asset('logo.png') }}" alt="Logo"
-                                class="h-24 w-auto object-contain drop-shadow-lg">
+                            <img src="{{ asset('logoo.png') }}" alt="Logo"
+                                class="h-16 mb-8 w-auto object-contain drop-shadow-lg">
                         </a>
 
                         {{-- JUDUL DENGAN STROKE --}}
                         <h1 class="text-3xl font-black tracking-widest uppercase">
-                            <span class="text-black">KU</span>
-                            <span class="text-white" style="-webkit-text-stroke: 2px black; paint-order: stroke fill;">
-                                KUS
-                            </span>
+                            <span class="text-white"><i>KU</span><span class="text-[#7f5af0]">KUS</i></span>
                         </h1>
 
                     </div>
-                    <p class="text-black text-sm mt-1">Buat akun baru</p>
+                    <p class="text-white text-sm mt-1">Buat akun baru</p>
                 </div>
 
                 {{-- Validation Errors --}}
@@ -62,52 +59,52 @@
 
                     {{-- Input NAMA (Style baru: Putih Border Hitam) --}}
                     <div class="mb-4">
-                        <label for="name" class="block font-bold text-xs text-gray-900 mb-1 tracking-widest">
+                        <label for="name" class="ml-2 block font-bold text-xs text-gray-900 mb-1 tracking-widest">
                             NAMA
                         </label>
                         <input id="name" type="text" name="name" value="{{ old('name') }}" required autofocus
                             autocomplete="name"
-                            class="w-full bg-white border-2 border-black text-gray-900 font-bold rounded p-2.5 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-colors shadow-sm placeholder-gray-500"
+                            class="w-full bg-white border-2 border-purple text-gray-900 font-bold rounded-2xl p-2.5 focus:ring-2 focus:ring-purple-500 focus:border-purple-500 outline-none transition-colors shadow-sm placeholder-white/50"
                             placeholder="Nama Lengkap">
                     </div>
 
                     {{-- Input EMAIL (Style baru) --}}
                     <div class="mb-4">
-                        <label for="email" class="block font-bold text-xs text-gray-900 mb-1 tracking-widest">
+                        <label for="email" class="ml-2 block font-bold text-xs text-gray-900 mb-1 tracking-widest">
                             EMAIL
                         </label>
                         <input id="email" type="email" name="email" value="{{ old('email') }}" required
                             autocomplete="username"
-                            class="w-full bg-white border-2 border-black text-gray-900 font-bold rounded p-2.5 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-colors shadow-sm placeholder-gray-500"
-                            placeholder="user@example.com">
+                            class="w-full bg-white border-2 border-purple text-gray-900 font-bold rounded-2xl p-2.5 focus:ring-2 focus:ring-purple-500 focus:border-purple-500 outline-none transition-colors shadow-sm placeholder-white/50"
+                            placeholder="user@gmail.com">
                     </div>
 
                     {{-- Input PASSWORD (Style baru) --}}
                     <div class="mb-4">
-                        <label for="password" class="block font-bold text-xs text-gray-900 mb-1 tracking-widest">
+                        <label for="password" class="ml-2 block font-bold text-xs text-gray-900 mb-1 tracking-widest">
                             PASSWORD
                         </label>
                         <input id="password" type="password" name="password" required autocomplete="new-password"
-                            class="w-full bg-white border-2 border-black text-gray-900 font-bold rounded p-2.5 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-colors shadow-sm placeholder-gray-500"
+                            class="w-full bg-white border-2 border-purple text-gray-900 font-bold rounded-2xl p-2.5 focus:ring-2 focus:ring-purple-500 focus:border-purple-500 outline-none transition-colors shadow-sm placeholder-white/50"
                             placeholder="••••••••">
                     </div>
 
                     {{-- Input KONFIRMASI PASSWORD (Style baru) --}}
                     <div class="mb-6">
                         <label for="password_confirmation"
-                            class="block font-bold text-xs text-gray-900 mb-1 tracking-widest">
+                            class="ml-2 block font-bold text-xs text-gray-900 mb-1 tracking-widest">
                             KONFIRMASI PASSWORD
                         </label>
                         <input id="password_confirmation" type="password" name="password_confirmation" required
                             autocomplete="new-password"
-                            class="w-full bg-white border-2 border-black text-gray-900 font-bold rounded p-2.5 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-colors shadow-sm placeholder-gray-500"
+                            class="w-full bg-white border-2 border-purple text-gray-900 font-bold rounded-2xl p-2.5 focus:ring-2 focus:ring-purple-500 focus:border-purple-500 outline-none transition-colors shadow-sm placeholder-white/50"
                             placeholder="••••••••">
                     </div>
 
                     {{-- Tombol Daftar --}}
                     <div class="flex items-center justify-end mt-6">
                         <button type="submit"
-                            class="bg-gradient-to-r from-black to-black hover:from-blue-500 hover:to-blue-400 text-white font-bold py-2 px-6 rounded shadow-lg transform hover:translate-y-[-1px] transition-all duration-200 flex items-center gap-2 border border-black/20">
+                            class="bg-[#7f5af0] hover:bg-[#6849c4] text-white font-bold rounded-2xl py-2 px-6 rounded shadow-lg transform hover:translate-y-[-1px] transition-all duration-200 flex items-center gap-2 border border-black/20">
                             <span>DAFTAR</span>
                         </button>
                     </div>
@@ -116,7 +113,7 @@
 
             {{-- FOOTER PANEL (Link balik ke Login) --}}
             <div class="px-8 py-4 border-t border-gray-700/30 text-center">
-                <p class="text-sm text-gray-800 font-medium">
+                <p class="text-sm text-white font-medium">
                     Sudah punya akun?
                     <a href="{{ route('login') }}"
                         class="text-blue-600 hover:text-blue-800 font-bold ml-1 hover:underline">

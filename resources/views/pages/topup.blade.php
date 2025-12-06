@@ -1,11 +1,11 @@
 @extends('layouts.guest')
 
 @section('content')
-<div class="bg-[#1b2838] min-h-screen py-12">
+<div class="bg-[#242629] min-h-screen py-12">
     <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         
         <h1 class="text-3xl font-light text-white uppercase tracking-wider mb-8">
-            Top Up <span class="font-bold text-[#66c0f4]">Kukus Money</span>
+            Top Up <span class="font-bold text-[#7f5af0]">Kukus Money</span>
         </h1>
 
         @if(session('success'))
@@ -25,10 +25,10 @@
             </div>
         @endif
 
-        <div class="bg-[#16202d] p-8 border border-black shadow-2xl" x-data="{ manualInput: '' }">
+        <div class="bg-[#16161a] p-8 border border-black shadow-2xl" x-data="{ manualInput: '' }">
             
             {{-- Current Balance Display --}}
-            <div class="mb-8 p-4 bg-[#2a3f5a] rounded-sm border-l-4 border-[#66c0f4]">
+            <div class="mb-8 p-4 bg-[#242629] rounded-sm border-l-4 border-[#7f5af0]">
                 <p class="text-gray-400 text-sm uppercase font-bold tracking-wider">Saldo Anda Saat Ini</p>
                 <p class="text-4xl font-black text-white">
                     Rp {{ number_format(Auth::user()->kukus_money_balance ?? 0, 0, ',', '.') }}
@@ -52,7 +52,7 @@
                                        class="peer hidden" 
                                        @click="manualInput = ''"
                                 >
-                                <div class="text-center bg-[#2a3f5a] p-4 rounded-sm border-2 border-transparent peer-checked:border-red-500 peer-checked:bg-[#3d4d5d] group-hover:bg-[#324558] transition-all shadow-md">
+                                <div class="text-center bg-[#242629] p-4 rounded-sm border-2 border-transparent peer-checked:border-red-500 peer-checked:bg-[#3d4d5d] group-hover:bg-[#7f5af0] transition-all shadow-md">
                                     <span class="text-white font-bold text-lg block">Rp {{ number_format($amount, 0, ',', '.') }}</span>
                                 </div>
                             </label>
@@ -72,11 +72,11 @@
                            min="10000"
                            x-model="manualInput"
                            @input="document.querySelectorAll('input[name=preset_amount]').forEach(el => el.checked = false)"
-                           class="w-full bg-[#2a3f5a] text-white border border-black p-3 focus:outline-none focus:border-white rounded-sm placeholder-gray-500 focus:ring-0" 
+                           class="w-full bg-[#242629] text-white border border-black p-3 focus:outline-none focus:border-white rounded-sm placeholder-gray-500 focus:ring-0" 
                            placeholder="Rp 50.000 atau lebih">
                 </div>
                 
-                <p class="text-xs text-gray-500">Pilih salah satu opsi di atas, atau masukkan jumlah manual.</p>
+                <p class="text-xs text-white">Pilih salah satu opsi di atas, atau masukkan jumlah manual.</p>
 
                 {{-- Tombol Lanjutkan --}}
                 <div class="pt-6">

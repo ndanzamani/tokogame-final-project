@@ -1,42 +1,7 @@
 @extends('layouts.guest')
 
 @section('content')
-    <div class="bg-gray-900 text-gray-200 min-h-screen">
-
-        {{-- HEADER NAVIGASI TIRUAN STEAM --}}
-        <header class="bg-gray-800 shadow-lg border-b border-gray-700">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 flex justify-between items-center">
-
-                <div class="flex items-center space-x-6">
-                    <a href="{{ route('store.index') }}" class="text-2xl font-black text-white tracking-widest">
-                        STEAM<span class="text-blue-500">CLONE</span>
-                    </a>
-                    <nav class="hidden md:flex space-x-4 text-sm font-semibold">
-                        <a href="{{ route('store.index') }}" class="hover:text-white text-gray-400">STORE</a>
-                        <a href="{{ route('library.index') }}" class="hover:text-white text-gray-400">LIBRARY</a>
-                        <a href="#" class="hover:text-white text-gray-400">COMMUNITY</a>
-                    </nav>
-                </div>
-
-                <div class="space-x-2 flex items-center bg-gray-700 p-1 rounded-sm">
-                    @if (Route::has('login'))
-                        @auth
-                            <span class="text-sm text-gray-400">Halo, {{ Auth::user()->name }}</span>
-                            <a href="{{ route('logout') }}"
-                                onclick="event.preventDefault(); document.getElementById('logout-form').submit();"
-                                class="text-xs bg-red-600 hover:bg-red-700 text-white px-2 py-0.5 rounded-sm font-bold">LOGOUT</a>
-                            <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">@csrf</form>
-                        @else
-                            <a href="{{ route('login') }}"
-                                class="text-xs text-gray-300 hover:text-white px-2 py-0.5 font-bold border-r border-gray-600 pr-3">LOGIN</a>
-                            <a href="{{ route('register') }}"
-                                class="text-xs text-gray-300 hover:text-white px-2 py-0.5 font-bold">REGISTER</a>
-                        @endauth
-                    @endif
-                </div>
-            </div>
-        </header>
-        {{-- END HEADER --}}
+    <div class="bg-[#16161a] text-gray-200 min-h-screen">
 
         @if(isset($game))
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
@@ -57,16 +22,16 @@
                         <div class="mb-6">
                             <div class="flex border-b border-gray-700 mb-4">
                                 <button id="tab-desc-btn"
-                                    class="tab-btn p-3 px-6 text-sm font-semibold border-b-2 border-blue-500 text-white transition duration-150">
+                                    class="tab-btn p-3 px-6 text-sm font-semibold border-b-2 border-purple-500 text-white transition duration-150">
                                     DESKRIPSI
                                 </button>
                                 <button id="tab-specs-btn"
-                                    class="tab-btn p-3 px-6 text-sm font-semibold border-b-2 border-transparent text-gray-500 hover:text-white transition duration-150">
+                                    class="tab-btn p-3 px-6 text-sm font-semibold border-b-2  border-purple-500 border-transparent text-gray-500 hover:text-white transition duration-150">
                                     SPESIFIKASI
                                 </button>
                                 <button id="tab-reviews-btn"
-                                    class="tab-btn p-3 px-6 text-sm font-semibold border-b-2 border-transparent text-gray-500 hover:text-white transition duration-150">
-                                    ULASAN (Tiruan)
+                                    class="tab-btn p-3 px-6 text-sm font-semibold border-b-2  border-purple-500 border-transparent text-gray-500 hover:text-white transition duration-150">
+                                    ULASAN 
                                 </button>
                             </div>
 
@@ -81,7 +46,7 @@
 
                                 {{-- KONTEN 2: SPESIFIKASI (Hidden Awalnya) --}}
                                 <div id="content-specs" class="tab-page hidden">
-                                    <h2 class="text-2xl font-bold mb-3 text-white">Persyaratan Sistem (Tiruan)</h2>
+                                    <h2 class="text-2xl font-bold mb-3 text-white">Persyaratan Sistem</h2>
                                     <ul class="text-gray-400 space-y-2">
                                         <li><span class="font-bold text-white">OS:</span> Windows 10</li>
                                         <li><span class="font-bold text-white">Prosesor:</span> Intel Core i5 / AMD Ryzen 5</li>
@@ -92,7 +57,7 @@
 
                                 {{-- KONTEN 3: ULASAN (Hidden Awalnya) --}}
                                 <div id="content-reviews" class="tab-page hidden">
-                                    <h2 class="text-2xl font-bold mb-3 text-white">Ulasan Pengguna (Tiruan)</h2>
+                                    <h2 class="text-2xl font-bold mb-3 text-white">Ulasan Pengguna</h2>
                                     <div class="p-4 bg-gray-800 rounded-md mb-3">
                                         <p class="font-semibold text-green-400">Sangat Positif</p>
                                         <p class="text-sm text-gray-400">"Game ini wajib dibeli! Ceritanya luar biasa." -
@@ -122,7 +87,7 @@
 
                     {{-- Kolom Kanan: Detail Beli --}}
                     <div class="w-1/4">
-                        <div class="bg-gray-800 p-6 rounded-lg h-fit shadow-xl border border-gray-700">
+                        <div class="bg-[#242629] p-6 rounded-lg h-fit shadow-xl border border-gray-700">
                             <h3 class="text-xl font-bold mb-4 text-white">Beli {{ $game->title }}</h3>
 
                             {{-- Kalkulasi dan Kotak Harga --}}
@@ -163,7 +128,7 @@
                             <form action="{{ route('cart.add', $game) }}" method="POST">
                                 @csrf
                                 <button type="submit"
-                                    class="w-full text-center bg-green-600 hover:bg-green-700 text-white py-3 rounded-sm font-semibold text-lg">
+                                    class="w-full text-center bg-[#2cb67d] text-white py-3 rounded-sm font-semibold text-lg">
                                     TAMBAH KE KERANJANG
                                 </button>
                             </form>

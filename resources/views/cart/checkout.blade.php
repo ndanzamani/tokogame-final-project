@@ -1,16 +1,16 @@
 @extends('layouts.guest')
 
 @section('content')
-<div class="bg-[#1b2838] min-h-screen py-8">
+<div class="bg-[#242629] min-h-screen py-8">
     <div class="max-w-4xl mx-auto">
-        
+    
         {{-- Breadcrumb --}}
-        <div class="text-xs text-blue-400 font-bold mb-6 uppercase">
+        <div class="text-xs text-[#7f5af0] font-bold mb-6 uppercase">
             <a href="{{ route('cart.index') }}" class="hover:text-white">Cart</a> > <span class="text-gray-400">Payment</span>
         </div>
 
         <h1 class="text-3xl font-light text-white uppercase tracking-wider mb-8">
-            Payment <span class="font-bold text-[#66c0f4]">Method</span>
+            Payment <span class="font-bold text-[#7f5af0]">Method</span>
         </h1>
         
         @if(session('error'))
@@ -19,7 +19,7 @@
             </div>
         @endif
 
-        <div class="flex flex-col md:flex-row gap-8 bg-[#16202d] p-8 border border-black shadow-2xl">
+        <div class="flex flex-col md:flex-row gap-8 bg-[#16161a] p-8 border border-black shadow-2xl">
             
             {{-- KIRI: Form Pembayaran --}}
             <div class="w-full md:w-2/3 border-r border-black pr-8">
@@ -36,7 +36,7 @@
                         <div class="space-y-2">
                             
                             {{-- BARU: Opsi Kukus Money --}}
-                            <label class="flex flex-col bg-[#2a3f5a] p-3 rounded cursor-pointer border border-transparent hover:border-white group">
+                            <label class="flex flex-col bg-[#242629] p-3 rounded cursor-pointer border border-transparent hover:border-white group">
                                 <div class="flex items-center">
                                     <input type="radio" name="payment_method" value="kukus_money" class="form-radio text-red-500 focus:ring-0">
                                     <span class="ml-3 text-white font-black uppercase text-base group-hover:text-red-400">Kukus Money</span>
@@ -48,25 +48,25 @@
                             </label>
 
                             {{-- Metode Pihak Ketiga --}}
-                            <label class="flex items-center bg-[#2a3f5a] p-3 rounded cursor-pointer border border-transparent hover:border-white group">
+                            <label class="flex items-center bg-[#242629] p-3 rounded cursor-pointer border border-transparent hover:border-white group">
                                 <input type="radio" name="payment_method" value="dana" class="form-radio text-[#66c0f4] focus:ring-0">
                                 <span class="ml-3 text-white font-bold group-hover:text-[#66c0f4]">DANA</span>
                                 <span class="ml-auto text-xs text-gray-400">E-Wallet</span>
                             </label>
 
-                            <label class="flex items-center bg-[#2a3f5a] p-3 rounded cursor-pointer border border-transparent hover:border-white group">
+                            <label class="flex items-center bg-[#242629] p-3 rounded cursor-pointer border border-transparent hover:border-white group">
                                 <input type="radio" name="payment_method" value="qris" class="form-radio text-[#66c0f4] focus:ring-0">
                                 <span class="ml-3 text-white font-bold group-hover:text-[#66c0f4]">QRIS</span>
                                 <span class="ml-auto text-xs text-gray-400">Scan QR</span>
                             </label>
 
-                            <label class="flex items-center bg-[#2a3f5a] p-3 rounded cursor-pointer border border-transparent hover:border-white group">
+                            <label class="flex items-center bg-[#242629] p-3 rounded cursor-pointer border border-transparent hover:border-white group">
                                 <input type="radio" name="payment_method" value="bca" class="form-radio text-[#66c0f4] focus:ring-0">
                                 <span class="ml-3 text-white font-bold group-hover:text-[#66c0f4]">Bank Transfer (BCA)</span>
                                 <span class="ml-auto text-xs text-gray-400">Virtual Account</span>
                             </label>
 
-                            <label class="flex items-center bg-[#2a3f5a] p-3 rounded cursor-pointer border border-transparent hover:border-white group">
+                            <label class="flex items-center bg-[#242629] p-3 rounded cursor-pointer border border-transparent hover:border-white group">
                                 <input type="radio" name="payment_method" value="visa" class="form-radio text-[#66c0f4] focus:ring-0">
                                 <span class="ml-3 text-white font-bold group-hover:text-[#66c0f4]">Visa / MasterCard</span>
                                 <span class="ml-auto text-xs text-gray-400">Credit Card</span>
@@ -81,7 +81,7 @@
                         <p class="text-xs text-gray-400 mb-4">
                             Dengan mengklik "Lanjutkan Pembelian", Anda menyetujui <a href="#" class="text-white hover:underline">Perjanjian Pelanggan SteamClone</a>.
                         </p>
-                        <button type="submit" class="bg-gradient-to-r from-[#5c7e10] to-[#76a113] hover:brightness-110 text-white font-bold py-3 px-8 rounded-sm shadow-lg uppercase tracking-wider text-sm w-full md:w-auto">
+                        <button type="submit" class="bg-[#2cb67d] hover:brightness-110 text-white font-bold py-3 px-8 rounded-sm shadow-lg uppercase tracking-wider text-sm w-full md:w-auto">
                             Lanjutkan Pembelian
                         </button>
                     </div>
@@ -111,7 +111,7 @@
                 <div class="mb-6 border-t border-gray-600 pt-4">
                     <form action="{{ route('cart.checkout') }}" method="GET" id="voucherForm">
                         <label class="block text-gray-400 text-xs font-bold uppercase mb-2">Apply Voucher</label>
-                        <select name="voucher_id" onchange="document.getElementById('voucherForm').submit()" class="w-full bg-[#2a3f5a] text-white border-none rounded text-sm p-2">
+                        <select name="voucher_id" onchange="document.getElementById('voucherForm').submit()" class="w-full bg-[#242629] text-white border-none rounded text-sm p-2">
                             <option value="">Select a voucher...</option>
                             @foreach($vouchers as $voucher)
                                 <option value="{{ $voucher->id }}" {{ (isset($selectedVoucher) && $selectedVoucher->id == $voucher->id) ? 'selected' : '' }}>
@@ -138,7 +138,7 @@
 
                     <div class="flex justify-between items-center pt-2 border-t border-gray-700">
                         <span class="text-white font-bold">Total:</span>
-                        <span class="text-[#66c0f4] font-black text-xl">
+                        <span class="text-[#7f5af0] font-black text-xl">
                             Rp {{ number_format(isset($finalTotal) ? $finalTotal : $total, 0, ',', '.') }}
                         </span>
                     </div>

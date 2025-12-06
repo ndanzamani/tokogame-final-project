@@ -5,7 +5,7 @@
         </h2>
     </x-slot>
 
-    <div class="py-12 bg-[#1b2838] min-h-screen">
+    <div class="py-12 bg-[#242629] min-h-screen">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">
             
             {{-- STATUS / REQUEST PUBLISHER CARD --}}

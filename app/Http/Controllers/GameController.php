@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Session;
 use App\Models\Shelf; 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
+use App\Models\User;
 
 class GameController extends Controller
 {
@@ -175,6 +176,7 @@ class GameController extends Controller
 
     public function destroy(Game $game)
     {
+        /** @var \App\Models\User $user */
         $user = Auth::user();
 
         // Authorization: Allow if Admin OR if Publisher owns the game

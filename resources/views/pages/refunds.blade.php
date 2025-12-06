@@ -1,5 +1,5 @@
 <x-app-layout>
-    <div class="py-12 bg-[#1b2838] min-h-screen">
+    <div class="py-12 bg-[#242629] min-h-screen">
         <div class="max-w-4xl mx-auto sm:px-6 lg:px-8">
             
             {{-- Alert Messages --}}
@@ -14,8 +14,8 @@
                 </div>
             @endif
 
-            <div class="bg-[#171a21] border border-black shadow-2xl p-8">
-                <h1 class="text-3xl font-black text-white mb-2 uppercase tracking-wide">SteamClone Refunds</h1>
+            <div class="bg-[#16161a] border border-black shadow-2xl p-8">
+                <h1 class="text-3xl font-black text-white mb-2 uppercase tracking-wide">Kukus Refunds</h1>
                 <p class="text-gray-400 text-sm mb-8">
                     Anda dapat mengajukan refund untuk game yang sudah dibeli dan belum memiliki permintaan yang tertunda (pending).
                 </p>
@@ -27,7 +27,7 @@
                     {{-- Select Game --}}
                     <div>
                         <label class="block text-[#66c0f4] text-sm font-bold uppercase tracking-wider mb-2">Pilih Game untuk di-Refund</label>
-                        <select name="game_id" class="w-full bg-[#2a3f5a] text-white border border-[#4c84a5] rounded-sm p-2 focus:ring-0 focus:border-white h-12">
+                        <select name="game_id" class="w-full bg-[#242629] text-white border border-[#7f5af0] rounded-sm p-2 focus:ring-0 focus:border-white h-12">
                             @forelse($games as $game)
                                 <option value="{{ $game->id }}">
                                     {{ $game->title }} 
@@ -46,7 +46,7 @@
                     {{-- Reason --}}
                     <div>
                         <label class="block text-[#66c0f4] text-sm font-bold uppercase tracking-wider mb-2">Alasan Refund</label>
-                        <textarea name="reason" rows="4" class="w-full bg-[#2a3f5a] text-white border border-[#4c84a5] rounded-sm p-3 focus:ring-0 focus:border-white" placeholder="Jelaskan mengapa Anda ingin mengembalikan game ini..."></textarea>
+                        <textarea name="reason" rows="4" class="w-full bg-[#242629] text-white border border-[#7f5af0] rounded-sm p-3 focus:ring-0 focus:border-white" placeholder="Jelaskan mengapa Anda ingin mengembalikan game ini..."></textarea>
                         @error('reason')
                             <span class="text-red-500 text-xs mt-1 block">{{ $message }}</span>
                         @enderror
@@ -55,7 +55,7 @@
                     <div class="pt-4 border-t border-gray-700">
                         <button type="submit" 
                             @if($games->isEmpty()) disabled @endif
-                            class="bg-gradient-to-r from-[#66c0f4] to-[#419ec0] hover:brightness-110 text-black font-black py-3 px-6 rounded-sm shadow-md w-full uppercase tracking-widest transition disabled:opacity-50 disabled:cursor-not-allowed">
+                            class="bg-gradient-to-r from-[#7f5af0] to-[#7f5af0] hover:brightness-110 text-black font-black py-3 px-6 rounded-sm shadow-md w-full uppercase tracking-widest transition disabled:opacity-50 disabled:cursor-not-allowed">
                             Kirim Permintaan Refund
                         </button>
                         @if($games->isEmpty())

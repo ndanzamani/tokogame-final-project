@@ -1,16 +1,16 @@
 <x-app-layout>
     <x-slot name="header">
         <div class="flex justify-between items-center">
-            <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
+            <h2 class="font-bold text-2xl text-white dark:text-gray-200 leading-tight">
                 {{ __('Admin Dashboard') }}
             </h2>
-            <a href="{{ route('admin.history') }}" class="bg-gray-700 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded text-xs uppercase tracking-wider">
-                📜 View History
+            <a href="{{ route('admin.history') }}" class="bg-[#7f5af0] hover:bg-gray-600 text-white font-bold py-2 px-4 rounded text-xs uppercase tracking-wider">
+                View History
             </a>
         </div>
     </x-slot>
 
-    <div class="py-12 bg-[#1b2838] min-h-screen">
+    <div class="py-12 bg-[#242629] min-h-screen">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-8">
             
             {{-- Alert Success --}}
@@ -21,7 +21,7 @@
             @endif
 
             {{-- 1. GAME APPROVALS (NEW) --}}
-            <div class="bg-[#16202d] overflow-hidden shadow-xl sm:rounded-lg p-6 border-l-4 border-yellow-500">
+            <div class="bg-[#16161a] overflow-hidden shadow-xl sm:rounded-lg p-6 border-l-4 border-yellow-500">
                 <h3 class="text-xl font-black text-white mb-4 uppercase tracking-widest flex items-center gap-2">
                     <span class="text-2xl">🎮</span> Pending Game Approvals
                 </h3>
@@ -76,7 +76,7 @@
             </div>
 
             {{-- 2. PUBLISHER REQUESTS (TETAP SAMA) --}}
-            <div class="bg-[#16202d] overflow-hidden shadow-xl sm:rounded-lg p-6 border-l-4 border-blue-500">
+            <div class="bg-[#16161a] overflow-hidden shadow-xl sm:rounded-lg p-6 border-l-4 border-blue-500">
                 <h3 class="text-xl font-black text-white mb-4 uppercase tracking-widest flex items-center gap-2">
                     <span class="text-2xl">👥</span> Publisher Requests
                 </h3>
@@ -120,7 +120,7 @@
             </div>
 
             {{-- 3. REFUND REQUESTS (TETAP SAMA) --}}
-            <div class="bg-[#16202d] overflow-hidden shadow-xl sm:rounded-lg p-6 border-l-4 border-purple-500">
+            <div class="bg-[#16161a] overflow-hidden shadow-xl sm:rounded-lg p-6 border-l-4 border-purple-500">
                 <h3 class="text-xl font-black text-white mb-4 uppercase tracking-widest flex items-center gap-2">
                     <span class="text-2xl">💸</span> Refund Requests
                 </h3>

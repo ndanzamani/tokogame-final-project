@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <div class="flex justify-between items-center">
-            <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
+            <h2 class="font-bold text-2xl text-white dark:text-gray-200 leading-tight">
                 {{ __('Daily Challenge') }}
             </h2>
             <div class="flex items-center gap-4">
@@ -15,10 +15,10 @@
         </div>
     </x-slot>
 
-    <div class="py-12 bg-[#1b2838] min-h-screen text-white">
+    <div class="py-12 bg-[#242629] min-h-screen text-white">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             
-            <div class="bg-[#16202d] overflow-hidden shadow-xl sm:rounded-lg p-8 border-t-4 border-yellow-500">
+            <div class="bg-[#16161a] overflow-hidden shadow-xl sm:rounded-lg p-8 border-t-4 border-[#7f5af0]">
                 
                 @if($completion)
                     <div class="text-center py-12">

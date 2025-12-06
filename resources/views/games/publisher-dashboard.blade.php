@@ -4,13 +4,13 @@
             <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
                 {{ __('Publisher Game Management') }}
             </h2>
-            <a href="{{ route('games.create') }}" class="bg-green-600 hover:bg-green-500 text-white font-bold py-2 px-4 rounded text-xs uppercase tracking-wider flex items-center gap-2">
+            <a href="{{ route('games.create') }}" class="bg-[#2cb67d] text-white font-bold py-2 px-4 rounded text-xs uppercase tracking-wider flex items-center gap-2">
                 <span class="text-lg leading-none">+</span> Upload New Game
             </a>
         </div>
     </x-slot>
 
-    <div class="py-12 bg-[#1b2838] min-h-screen">
+    <div class="py-12 bg-[#242629] min-h-screen">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-8">
             
             @if(session('success'))
@@ -19,7 +19,7 @@
                 </div>
             @endif
 
-            <div class="bg-[#16202d] overflow-hidden shadow-xl sm:rounded-lg p-6 border-t-4 border-[#66c0f4]">
+            <div class="bg-[#242629] overflow-hidden shadow-xl sm:rounded-lg p-6 border-t-4 border-[#7f5af0]">
                 <h3 class="text-xl font-black text-white mb-6 uppercase tracking-widest">
                     My Uploaded Games ({{ $userGames->count() }})
                 </h3>

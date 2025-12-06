@@ -25,7 +25,7 @@ class GameSeeder extends Seeder
 
         // 2. Buat 50 Data Game BARU menggunakan Factory
         // Factory akan menggunakan Faker untuk mengisi semua kolom secara acak
-        Game::factory()->count(50)->create();
+        Game::factory()->count(10)->create();
 
         // 3. (Opsional) Buat satu game khusus untuk memastikan selalu ada di featured
         Game::factory()->create([

@@ -1,10 +1,10 @@
 <section>
     <header>
-        <h2 class="text-lg font-medium text-gray-900 dark:text-gray-100">
+        <h2 class="text-lg font-medium text-white dark:text-gray-100">
             {{ __('Profile Information') }}
         </h2>
 
-        <p class="mt-1 text-sm text-gray-600 dark:text-gray-400">
+        <p class="mt-1 text-sm text-gray-300 dark:text-gray-400">
             {{ __("Update your account's profile information, avatar, and email address.") }}
         </p>
     </header>
@@ -34,11 +34,11 @@
                         file:mr-4 file:py-2 file:px-4
                         file:rounded-sm file:border-0
                         file:text-xs file:font-bold file:uppercase
-                        file:bg-[#66c0f4] file:text-black
-                        hover:file:bg-[#419ec0] file:cursor-pointer
+                        file:bg-[#7f5af0] file:text-black
+                        hover:file:bg-[#7f5af0] file:cursor-pointer
                         cursor-pointer focus:outline-none bg-[#2a3f5a] rounded-sm
                     " accept="image/*" />
-                    <p class="text-xs text-gray-500 mt-1">Recommended: Square image, max 2MB.</p>
+                    <p class="text-xs text-white mt-1">Recommended: Square image, max 2MB.</p>
                 </div>
             </div>
             <x-input-error class="mt-2" :messages="$errors->get('photo')" />

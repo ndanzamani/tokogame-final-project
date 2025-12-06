@@ -1,20 +1,20 @@
 <x-app-layout>
     <x-slot name="header">
         <div class="flex justify-between items-center">
-            <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
+            <h2 class="font-bold text-2xl text-white dark:text-gray-200 leading-tight">
                 {{ __('Admin History & Logs') }}
             </h2>
-            <a href="{{ route('admin.dashboard') }}" class="bg-gray-700 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded text-xs uppercase tracking-wider">
+            <a href="{{ route('admin.dashboard') }}" class="bg-[#7f5af0] hover:bg-gray-600 text-white font-bold py-2 px-4 rounded text-xs uppercase tracking-wider">
                 &larr; Back to Dashboard
             </a>
         </div>
     </x-slot>
 
-    <div class="py-12 bg-[#1b2838] min-h-screen">
+    <div class="py-12 bg-[#242629] min-h-screen">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-8">
 
             {{-- 1. REJECTED PUBLISHERS --}}
-            <div class="bg-[#16202d] overflow-hidden shadow-xl sm:rounded-lg p-6 border-t-4 border-red-500">
+            <div class="bg-[#16161a] overflow-hidden shadow-xl sm:rounded-lg p-6 border-t-4 border-red-500">
                 <h3 class="text-xl font-black text-white mb-4 uppercase tracking-widest text-red-400">
                     ❌ Rejected Publisher Requests
                 </h3>
@@ -34,7 +34,7 @@
             </div>
 
             {{-- 1.5. REJECTED GAMES (BARU) --}}
-            <div class="bg-[#16202d] overflow-hidden shadow-xl sm:rounded-lg p-6 border-t-4 border-red-700">
+            <div class="bg-[#16161a] overflow-hidden shadow-xl sm:rounded-lg p-6 border-t-4 border-red-700">
                 <h3 class="text-xl font-black text-white mb-4 uppercase tracking-widest text-red-600">
                     🚫 Rejected Games History
                 </h3>
@@ -69,7 +69,7 @@
             </div>
 
             {{-- 2. REFUND HISTORY --}}
-            <div class="bg-[#16202d] overflow-hidden shadow-xl sm:rounded-lg p-6 border-t-4 border-gray-500">
+            <div class="bg-[#16161a] overflow-hidden shadow-xl sm:rounded-lg p-6 border-t-4 border-gray-500">
                 <h3 class="text-xl font-black text-white mb-4 uppercase tracking-widest text-gray-400">
                     📜 Refund History
                 </h3>
@@ -108,7 +108,7 @@
             </div>
 
             {{-- 3. PUBLISHED GAMES HISTORY (ACTIVE) --}}
-            <div class="bg-[#16202d] overflow-hidden shadow-xl sm:rounded-lg p-6 border-t-4 border-green-500">
+            <div class="bg-[#16161a] overflow-hidden shadow-xl sm:rounded-lg p-6 border-t-4 border-green-500">
                 <h3 class="text-xl font-black text-white mb-4 uppercase tracking-widest text-green-400">
                     ✅ Currently Published Games
                 </h3>

@@ -101,7 +101,7 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::post('/admin/refund/{id}/reject', [AdminController::class, 'rejectRefund'])->name('admin.refund.reject');
     
     // Game Management (Delete permanen oleh Admin)
-    Route::delete('/games/{game}', [GameController::class, 'destroy'])->name('games.destroy');
+    Route::delete('/admin/games/{game}', [GameController::class, 'destroy'])->name('admin.games.destroy');
     
     // --- ADMIN TEST FEATURES ---
     Route::post('/admin/daily-challenge/set-game', [DailyChallengeController::class, 'setGame'])->name('admin.daily.setGame');

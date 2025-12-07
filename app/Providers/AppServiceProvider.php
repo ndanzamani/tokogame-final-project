@@ -22,5 +22,9 @@ class AppServiceProvider extends ServiceProvider
     {
         // Tambahkan ini untuk kompatibilitas MySQL/MariaDB
         Schema::defaultStringLength(191);
+
+        if ($this->app->environment('production')){
+            \URL::forceScheme('https');
+        }
     }
 }

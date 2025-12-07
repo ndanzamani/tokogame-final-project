@@ -44,6 +44,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     // --- END KUKUS MONEY ---
 
     Route::get('/library', [LibraryController::class, 'index'])->name('library.index');
+    Route::get('/library/download/{game}', [LibraryController::class, 'download'])->name('library.download');
     Route::post('/shelf', [LibraryController::class, 'storeShelf'])->name('shelf.store');
 
     // Profile Routes
